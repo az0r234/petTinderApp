@@ -1,0 +1,35 @@
+PODS:
+  - JGProgressHUD (2.2)
+  - LBTATools (1.0.12)
+  - Pageboy (3.6.2)
+  - SDWebImage (5.9.5):
+    - SDWebImage/Core (= 5.9.5)
+  - SDWebImage/Core (5.9.5)
+  - Tabman (2.9.1):
+    - Pageboy (~> 3.6.0)
+
+DEPENDENCIES:
+  - JGProgressHUD (~> 2.2)
+  - LBTATools (~> 1.0)
+  - Pageboy (~> 3.6)
+  - SDWebImage
+  - Tabman (~> 2.9)
+
+SPEC REPOS:
+  trunk:
+    - JGProgressHUD
+    - LBTATools
+    - Pageboy
+    - SDWebImage
+    - Tabman
+
+SPEC CHECKSUMS:
+  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
+  LBTATools: 389a901a01b9a56bea5682c40cd6e23530f40015
+  Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
+  SDWebImage: 0b2ba0d56479bf6a45ecddbfd5558bea93150d25
+  Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
+
+PODFILE CHECKSUM: 23ee70468dac474e807d1c0d5042ffaf4b6f2df9
+
+COCOAPODS: 1.10.0
