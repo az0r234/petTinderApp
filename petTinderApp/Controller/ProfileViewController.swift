@@ -58,6 +58,9 @@ class ProfileViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hud.textLabel.text = K.hudLoadingLabel
+        hud.show(in: self.view)
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         
@@ -205,7 +208,7 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         let animalNotFound = ProfileImageView()
         animalNotFound.layer.cornerRadius = 20
         animalNotFound.isUserInteractionEnabled = false
-        animalNotFound.profileImage.image = #imageLiteral(resourceName: "iPhone 11")
+        animalNotFound.profileImage.image = #imageLiteral(resourceName: "ResultNotFound")
         animalNotFound.gradientLayer.removeFromSuperlayer()
         animalNotFound.moreInfoBtn.removeFromSuperview()
         cardDeckView.addSubview(animalNotFound)
@@ -243,7 +246,7 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     //does the swipe animation when it's swiped on
     fileprivate func performSwipeAnimation(translation: CGFloat, angle: CGFloat){
         
-        let duration = 0.3
+        let duration = 0.5
         let positionXKeyPath = "position.x"
         let roationAnimationKeyPath = "transform.rotation.z"
         let translationKeyPath = "translation"

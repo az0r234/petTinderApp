@@ -33,6 +33,7 @@ class ProfileImageView: UIView{
     var nextCard: ProfileImageView?
     
     var delegate: CardViewDelegate?
+    var profileVCDelegate : ProfileViewControllerProtocol?
     
     var cardViewModel: AnimalCardViewModel!{
         didSet{
@@ -123,10 +124,12 @@ extension ProfileImageView{
             superview?.subviews.forEach({ (subview) in
                 subview.layer.removeAllAnimations()
             })
+            profileVCDelegate?.settingsDidGoUp()
         case .changed:
             handleChanged(gesture)
         case .ended:
             handleEnded(gesture: gesture)
+            profileVCDelegate?.settingsDidGoDown()
         default:
             ()
         }
