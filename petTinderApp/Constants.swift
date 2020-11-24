@@ -48,6 +48,8 @@ struct K {
     static let specialBtnTitleArray = ["Reset", "Submit", "Exit", "Go Back"]
 }
 
+
+
 enum HttpMethod: String {
     case post = "POST"
     case get = "GET"

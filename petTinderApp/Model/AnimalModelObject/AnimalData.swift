@@ -88,10 +88,16 @@ struct Animals: Codable, ProducesAnimalCardViewModel{
                 imageUrls.append(image.large!)
             }
         }
-        return AnimalCardViewModel(id: id, organizationLink: organizationId!, petFinderUrl: petFinderUrl, imageUrl: imageUrls, cardAttributedString: cardAttributedText, description: description, textAlignment: .left)
+        
+        let croppedImage = primaryPhotoCropped?.small != nil ? self.primaryPhotoCropped!.small! : ""
+        
+        let placeHolderImage = UIImage(named: type!.lowercased())
+//            , placeHolderImage: placeHolderImage!
+        
+        return AnimalCardViewModel(id: id, organizationLink: organizationId!, petFinderUrl: petFinderUrl, imageUrl: imageUrls, croppedImage: croppedImage, cardAttributedString: cardAttributedText, description: description, textAlignment: .left, placeHolderImage: placeHolderImage!)
     }
     
-    func getFirstName()->String{
+    fileprivate func getFirstName()->String{
         let name = self.name!
         var newName = String()
         if name.contains(" "){
@@ -102,6 +108,8 @@ struct Animals: Codable, ProducesAnimalCardViewModel{
         }
         return newName
     }
+    
+
     
     //MARK: - Breeds Object
     struct Breeds: Codable {

@@ -47,6 +47,8 @@ class ProfileImageView: UIView{
                 }
             }
             
+//            profileImage.image = cardViewModel.placeHolderImage
+            
             infoLabel.attributedText = cardViewModel.cardAttributedString
             infoLabel.textAlignment = cardViewModel.textAlignment
         }
