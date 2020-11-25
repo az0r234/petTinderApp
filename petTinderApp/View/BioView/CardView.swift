@@ -13,7 +13,7 @@ protocol CardViewDelegate {
     func didPressMoreInfo(url: String)
 }
 
-class ProfileImageView: UIView{
+class CardView: UIView{
     
     let profileImage: UIImageView = {
         let image = UIImageView()
@@ -30,26 +30,13 @@ class ProfileImageView: UIView{
         return b
     }()
     
-    var nextCard: ProfileImageView?
-    
+    var nextCard: CardView?
     var delegate: CardViewDelegate?
     var profileVCDelegate : ProfileViewControllerProtocol?
     
     var cardViewModel: AnimalCardViewModel!{
         didSet{
-            if let url = URL(string: (cardViewModel.imageUrl.first ?? "")!){
-                profileImage.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "cat1"), options: .continueInBackground)
-                profileImage.sd_setImage(with: url) { (image, error, cache, url) in
-                    if error != nil{
-                        self.profileImage.image = #imageLiteral(resourceName: "cat1")
-                    }else{
-                        self.profileImage.image = image
-                    }
-                }
-            }
-            
-//            profileImage.image = cardViewModel.placeHolderImage
-            
+            swipingPhotoController.cardViewModel = self.cardViewModel
             infoLabel.attributedText = cardViewModel.cardAttributedString
             infoLabel.textAlignment = cardViewModel.textAlignment
         }
@@ -57,8 +44,8 @@ class ProfileImageView: UIView{
     
     var paginationUrl: String!
     
-    
-    let infoLabel = UILabel()
+    fileprivate let swipingPhotoController = SwipingPhotosController(isCardViewMode: true)
+    fileprivate let infoLabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,19 +58,22 @@ class ProfileImageView: UIView{
     fileprivate let threshold: CGFloat = 80
     let gradientLayer = CAGradientLayer()
     
-    fileprivate func setupCardLayout() {
-        clipsToBounds = true
-        layer.cornerRadius = 15
-        addSubview(profileImage)
-        profileImage.fillSuperview()
-        
-        addSubview(moreInfoBtn)
-        moreInfoBtn.anchor(top: nil, leading: nil, bottom: bottomAnchor , trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 15, right: 15))
-        moreInfoBtn.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
-        
+    fileprivate func setupGradient() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.locations = [0.5, 1.4]
         layer.addSublayer(gradientLayer)
+    }
+    
+    fileprivate func setupCardLayout() {
+        clipsToBounds = true
+        layer.cornerRadius = 15
+        
+        let swipingPhotosView = swipingPhotoController.view!
+        addSubview(swipingPhotosView)
+        swipingPhotosView.fillSuperview()
+        
+        
+        setupGradient()
         
         addSubview(infoLabel)
         infoLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
@@ -91,7 +81,9 @@ class ProfileImageView: UIView{
         infoLabel.textColor = .white
         infoLabel.numberOfLines = 0
         
-        bringSubviewToFront(moreInfoBtn)
+        addSubview(moreInfoBtn)
+        moreInfoBtn.anchor(top: nil, leading: nil, bottom: bottomAnchor , trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 15, right: 15))
+        moreInfoBtn.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
         
     }
     
@@ -111,7 +103,7 @@ class ProfileImageView: UIView{
 
 
 //MARK: - Card Movement - Pan Gesture
-extension ProfileImageView{
+extension CardView{
     
     fileprivate func setupCardPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))

@@ -13,8 +13,6 @@ import LBTATools
 
 
 class RootTabViewController: TabmanViewController, ProfileViewControllerProtocol{
-
-    
     
     enum Tab: String, CaseIterable {
         case profile

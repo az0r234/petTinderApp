@@ -13,8 +13,7 @@ struct K {
     
     static let tokenString = "https://api.petfinder.com/v2/oauth2/token"
     static let apiString = "https://api.petfinder.com"
-    static let defaultUrlPath = "/v2/animals?sort=distance&limit=20&"
-    
+    static let defaultUrlPath = "/v2/animals?sort=distance&limit=20"
     
     static let hudLoadingLabel = "Loading Animals"
     

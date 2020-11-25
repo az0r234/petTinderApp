@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		997DB5FAF755E37F1D0E7E2D /* Pods_petTinderApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8A1B804969C7FB02D63B88 /* Pods_petTinderApp.framework */; };
 		BF1CD460255CA22700489057 /* AnimalTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1CD45F255CA22700489057 /* AnimalTypes.swift */; };
+		BF274B14256DBAEF00DBEF74 /* SwipingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */; };
 		BF4B3BC125568EF300BD560C /* AnimalPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B3BC025568EF300BD560C /* AnimalPreferences.swift */; };
 		BF4ED089255BB3AD007EB1C0 /* DataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4ED088255BB3AD007EB1C0 /* DataTableView.swift */; };
 		BF5A21D0255A705B002C042F /* ParametersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5A21CF255A705B002C042F /* ParametersButton.swift */; };
@@ -21,7 +22,7 @@
 		BF6FA29324FDCB9200D773C2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */; };
 		BF6FA29524FDCBAD00D773C2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29424FDCBAD00D773C2 /* SettingsViewController.swift */; };
 		BF6FA29724FDCBB900D773C2 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29624FDCBB900D773C2 /* ChatViewController.swift */; };
-		BF6FA29924FDCBEF00D773C2 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29824FDCBEF00D773C2 /* ProfileImageView.swift */; };
+		BF6FA29924FDCBEF00D773C2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29824FDCBEF00D773C2 /* CardView.swift */; };
 		BF87E31E25647C3700B43DBD /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87E31D25647C3700B43DBD /* ParseManager.swift */; };
 		BF90D5692548A92C00C4C6E0 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D5682548A92C00C4C6E0 /* Token.swift */; };
 		BF90D5712548AD2700C4C6E0 /* API-Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D5702548AD2700C4C6E0 /* API-Keys.swift */; };
@@ -47,6 +48,7 @@
 		7D8A1B804969C7FB02D63B88 /* Pods_petTinderApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_petTinderApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE433345AEDC3D9BC94A3943 /* Pods-petTinderApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-petTinderApp.release.xcconfig"; path = "Target Support Files/Pods-petTinderApp/Pods-petTinderApp.release.xcconfig"; sourceTree = "<group>"; };
 		BF1CD45F255CA22700489057 /* AnimalTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalTypes.swift; sourceTree = "<group>"; };
+		BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingViewController.swift; sourceTree = "<group>"; };
 		BF4B3BC025568EF300BD560C /* AnimalPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalPreferences.swift; sourceTree = "<group>"; };
 		BF4ED088255BB3AD007EB1C0 /* DataTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableView.swift; sourceTree = "<group>"; };
 		BF5A21CF255A705B002C042F /* ParametersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersButton.swift; sourceTree = "<group>"; };
@@ -61,7 +63,7 @@
 		BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BF6FA29424FDCBAD00D773C2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BF6FA29624FDCBB900D773C2 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		BF6FA29824FDCBEF00D773C2 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		BF6FA29824FDCBEF00D773C2 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		BF87E31D25647C3700B43DBD /* ParseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
 		BF90D5682548A92C00C4C6E0 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		BF90D5702548AD2700C4C6E0 /* API-Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API-Keys.swift"; sourceTree = "<group>"; };
@@ -114,7 +116,7 @@
 		BF4B3BBE25568EC600BD560C /* BioView */ = {
 			isa = PBXGroup;
 			children = (
-				BF6FA29824FDCBEF00D773C2 /* ProfileImageView.swift */,
+				BF6FA29824FDCBEF00D773C2 /* CardView.swift */,
 			);
 			path = BioView;
 			sourceTree = "<group>";
@@ -201,6 +203,7 @@
 				BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */,
 				BF6FA29624FDCBB900D773C2 /* ChatViewController.swift */,
 				BF5A21D4255B3708002C042F /* AnimalPreferenceController.swift */,
+				BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -381,11 +384,12 @@
 				BF4B3BC125568EF300BD560C /* AnimalPreferences.swift in Sources */,
 				BFF36532255BD1C2009820CD /* ParameterSlider.swift in Sources */,
 				BF6CEE5224F1B2DA00D1803D /* SceneDelegate.swift in Sources */,
-				BF6FA29924FDCBEF00D773C2 /* ProfileImageView.swift in Sources */,
+				BF6FA29924FDCBEF00D773C2 /* CardView.swift in Sources */,
 				BFEF417D25636ED700261AE8 /* JsonParserGeneric.swift in Sources */,
 				BFB8C1FC24F5C12500A51315 /* TinderBarButtonContainer.swift in Sources */,
 				BFF94E742563613A00841C82 /* Organization.swift in Sources */,
 				BF6FA29724FDCBB900D773C2 /* ChatViewController.swift in Sources */,
+				BF274B14256DBAEF00DBEF74 /* SwipingViewController.swift in Sources */,
 				BF90D5712548AD2700C4C6E0 /* API-Keys.swift in Sources */,
 				BF6FA29524FDCBAD00D773C2 /* SettingsViewController.swift in Sources */,
 				BF4ED089255BB3AD007EB1C0 /* DataTableView.swift in Sources */,
