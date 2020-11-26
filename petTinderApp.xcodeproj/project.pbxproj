@@ -35,6 +35,9 @@
 		BFB8C1FC24F5C12500A51315 /* TinderBarButtonContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C1F724F5C12500A51315 /* TinderBarButtonContainer.swift */; };
 		BFB8C20124F5C24600A51315 /* UIColor+Interpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C20024F5C24600A51315 /* UIColor+Interpolation.swift */; };
 		BFB8C20324F5C25600A51315 /* TinderColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C20224F5C25600A51315 /* TinderColors.swift */; };
+		BFB9D8E5256F39E400C2B8EE /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9D8E4256F39E400C2B8EE /* RegistrationViewController.swift */; };
+		BFB9D8E9256F3B6F00C2B8EE /* intro.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BFB9D8E8256F3B6F00C2B8EE /* intro.mp4 */; };
+		BFB9D8EC256F610D00C2B8EE /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9D8EB256F610D00C2B8EE /* CustomButtons.swift */; };
 		BFC7945C256708F700FFDA60 /* OrganizationCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC7945B256708F700FFDA60 /* OrganizationCardViewModel.swift */; };
 		BFEF417D25636ED700261AE8 /* JsonParserGeneric.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF417C25636ED700261AE8 /* JsonParserGeneric.swift */; };
 		BFF36532255BD1C2009820CD /* ParameterSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF36531255BD1C2009820CD /* ParameterSlider.swift */; };
@@ -76,6 +79,9 @@
 		BFB8C1F824F5C12500A51315 /* TinderBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinderBarButton.swift; sourceTree = "<group>"; };
 		BFB8C20024F5C24600A51315 /* UIColor+Interpolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Interpolation.swift"; sourceTree = "<group>"; };
 		BFB8C20224F5C25600A51315 /* TinderColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinderColors.swift; sourceTree = "<group>"; };
+		BFB9D8E4256F39E400C2B8EE /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		BFB9D8E8256F3B6F00C2B8EE /* intro.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = intro.mp4; sourceTree = "<group>"; };
+		BFB9D8EB256F610D00C2B8EE /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 		BFC7945B256708F700FFDA60 /* OrganizationCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationCardViewModel.swift; sourceTree = "<group>"; };
 		BFEF417C25636ED700261AE8 /* JsonParserGeneric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParserGeneric.swift; sourceTree = "<group>"; };
 		BFF36531255BD1C2009820CD /* ParameterSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterSlider.swift; sourceTree = "<group>"; };
@@ -166,6 +172,7 @@
 				BF6CEE6624F1B41900D1803D /* View */,
 				BF6CEE6524F1B41100D1803D /* Controller */,
 				BFB8C1FF24F5C24600A51315 /* Utilities */,
+				BFB9D8E8256F3B6F00C2B8EE /* intro.mp4 */,
 				BF6CEE5124F1B2DA00D1803D /* SceneDelegate.swift */,
 				BF90D5702548AD2700C4C6E0 /* API-Keys.swift */,
 				BF6CEE4F24F1B2DA00D1803D /* AppDelegate.swift */,
@@ -198,6 +205,7 @@
 		BF6CEE6524F1B41100D1803D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BFB9D8E4256F39E400C2B8EE /* RegistrationViewController.swift */,
 				BFB8C1F124F5C0FC00A51315 /* RootTabViewController.swift */,
 				BF6FA29424FDCBAD00D773C2 /* SettingsViewController.swift */,
 				BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */,
@@ -214,6 +222,7 @@
 				BFB8C1FE24F5C13800A51315 /* TinderBar */,
 				BF4B3BBE25568EC600BD560C /* BioView */,
 				BF5F1285255F602000B563CE /* AnimalPrefCard */,
+				BFB9D8EB256F610D00C2B8EE /* CustomButtons.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -314,6 +323,7 @@
 			files = (
 				BF6CEE5C24F1B2DB00D1803D /* LaunchScreen.storyboard in Resources */,
 				BF6CEE5924F1B2DB00D1803D /* Assets.xcassets in Resources */,
+				BFB9D8E9256F3B6F00C2B8EE /* intro.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF87E31E25647C3700B43DBD /* ParseManager.swift in Sources */,
+				BFB9D8EC256F610D00C2B8EE /* CustomButtons.swift in Sources */,
 				BFB8C1F924F5C12500A51315 /* TinderBarButton.swift in Sources */,
 				BF90D5742548AD3000C4C6E0 /* Constants.swift in Sources */,
 				BF5F128B255F858300B563CE /* Breeds.swift in Sources */,
@@ -376,6 +387,7 @@
 				BFB8C1FB24F5C12500A51315 /* TinderBar.swift in Sources */,
 				BF6FA29324FDCB9200D773C2 /* ProfileViewController.swift in Sources */,
 				BF90D5692548A92C00C4C6E0 /* Token.swift in Sources */,
+				BFB9D8E5256F39E400C2B8EE /* RegistrationViewController.swift in Sources */,
 				BF5A21D0255A705B002C042F /* ParametersButton.swift in Sources */,
 				BFF94E7125635A6500841C82 /* AnimalCardViewModel.swift in Sources */,
 				BF5A21D5255B3708002C042F /* AnimalPreferenceController.swift in Sources */,

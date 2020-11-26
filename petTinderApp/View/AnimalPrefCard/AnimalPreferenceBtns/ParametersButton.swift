@@ -22,15 +22,13 @@ class ParametersButtons: UIButton {
         
         setupButtonAttr()
         setLabels()
-        addSubview(leftLbl)
-        addSubview(rightLbl)
+        
         addLabelsToSubview()
         
     }
     
     fileprivate func setupButtonAttr(){
         translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(equalToConstant: 70).isActive = true
         backgroundColor = .cyan
         layer.cornerRadius = 20
         sizeToFit()
@@ -50,19 +48,13 @@ class ParametersButtons: UIButton {
     }
     
     fileprivate func addLabelsToSubview() {
-        if K.specialBtnTitleArray.contains(self.leftLabel){
-            leftLbl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-            leftLbl.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-            leftLbl.textAlignment = .center
-        }else{
-            leftLbl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-            leftLbl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
-        }
+        addSubview(leftLbl)
+        addSubview(rightLbl)
+        leftLbl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        leftLbl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
+        rightLbl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        rightLbl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15).isActive = true
         
-        if !self.rightLabel.isEmpty{
-            rightLbl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-            rightLbl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15).isActive = true
-        }
     }
 
     required init?(coder: NSCoder) {

@@ -40,6 +40,10 @@ class AnimalPreferenceController: UICollectionViewController {
         setButtonTargets() //sets target for each buttons
     }
     
+//    deinit {
+//        print("object getting destroyed")
+//    }
+    
     fileprivate func setButtonTargets(){
         //Table View
         preferenceBtnView.typeBtn.addTarget(self, action: #selector(handleType), for: .touchUpInside)

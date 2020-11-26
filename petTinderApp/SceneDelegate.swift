@@ -21,12 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
+        let navController = UINavigationController(rootViewController: RegistrationViewController())
+        navController.navigationBar.isHidden = true
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
         
-        let mainView = RootTabViewController()
-        window?.rootViewController = mainView
-        
     }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

@@ -9,15 +9,20 @@
 import UIKit
 
 class BottomStackView: UIStackView {
-    let submitBtn = ParametersButtons(leftLabel: K.submitBtn, rightLabel: "")
-    let resetBtn = ParametersButtons(leftLabel: K.resetBtn, rightLabel: "")
-    let exitBtn = ParametersButtons(leftLabel: K.exitBtn, rightLabel: "")
+    let submitBtn = CustomButton(centerLabel: K.submitBtn)
+    let resetBtn = CustomButton(centerLabel: K.resetBtn)
+    let exitBtn = CustomButton(centerLabel: K.exitBtn)
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         axis = .horizontal
         distribution = .fillEqually
         spacing = 10
+    
+        submitBtn.backgroundColor = .cyan
+        resetBtn.backgroundColor = .cyan
+        exitBtn.backgroundColor = .cyan
         
         resetBtn.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         exitBtn.layer.cornerRadius = 0

@@ -39,6 +39,18 @@ class RootTabViewController: TabmanViewController, ProfileViewControllerProtocol
         addBar(bar, dataSource: self, at: .top)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.isHidden = true
+        let darkView = UIView()
+        darkView.backgroundColor = .black
+        darkView.layer.borderColor = .none
+        darkView.layer.borderWidth = .zero
+        view.addSubview(darkView)
+        darkView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -1, right: 0))
+    }
+    
     func settingsDidGoUp() {
         bar.isUserInteractionEnabled = false
         isScrollEnabled = false
@@ -48,6 +60,10 @@ class RootTabViewController: TabmanViewController, ProfileViewControllerProtocol
         bar.isUserInteractionEnabled = true
         isScrollEnabled = true
     }
+    
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        .darkContent
+//    }
     
 }
 

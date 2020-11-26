@@ -29,7 +29,8 @@ class DataTableView: UIView {
         t.separatorStyle = .none
         return t
     }()
-    let goBack = ParametersButtons(leftLabel: K.backBtn, rightLabel: "")
+    
+    let goBack = CustomButton(centerLabel: K.backBtn)
     
     var delegate: OptionSelected?
     var dataDictionary = [String:[String]]()
@@ -64,7 +65,7 @@ class DataTableView: UIView {
     }
     
     fileprivate func addButtonStackToView() {
-        goBack.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        goBack.backgroundColor = .cyan
         let stackView = UIStackView(arrangedSubviews: [searchBar, tableView, goBack])
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false

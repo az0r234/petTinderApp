@@ -43,8 +43,6 @@ struct K {
     static let exitBtn = "Exit"
     static let submitBtn = "Submit"
     static let backBtn = "Go Back"
-    
-    static let specialBtnTitleArray = ["Reset", "Submit", "Exit", "Go Back"]
 }
 
 
