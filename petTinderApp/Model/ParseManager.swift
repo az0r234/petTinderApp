@@ -40,13 +40,7 @@ struct FetchManager {
         JSONParser().downloadList(of: AnimalData.self, from: url) { (result) in
             switch result {
             case let .failure(error):
-                if error is DataError {
-                    print("eroarea este: \(error.localizedDescription)")
-                } else {
-                    print("err is \(error.localizedDescription)")
-                }
-                print(error.localizedDescription)
-                
+                completion(nil, error)
             case let .success(animalData):
                 completion(animalData, nil)
             }
@@ -58,12 +52,7 @@ struct FetchManager {
         JSONParser().downloadList(of: AnimalTypesData.self, from: url) { (result) in
             switch result {
             case let .failure(error):
-                if error is DataError {
-                    completion(nil, error)
-                } else {
-                    completion(nil, error)
-                }
-                print(error.localizedDescription)
+                completion(nil, error)
             case let .success(animalTypesData):
                 completion(animalTypesData, nil)
             }
@@ -75,12 +64,7 @@ struct FetchManager {
         JSONParser().downloadList(of: BreedModel.self, from: url) { (result) in
             switch result {
             case let .failure(error):
-                if error is DataError {
-                    completion(nil, error)
-                } else {
-                    completion(nil, error)
-                }
-                print(error.localizedDescription)
+                completion(nil, error)
             case let .success(breed):
                 completion(breed, nil)
             }
@@ -92,12 +76,7 @@ struct FetchManager {
         JSONParser().downloadList(of: OrganizationData.self, from: url) { (result) in
             switch result {
             case let .failure(error):
-                if error is DataError {
-                    completion(nil, error)
-                } else {
-                    completion(nil, error)
-                }
-                print(error.localizedDescription)
+                completion(nil, error)
             case let .success(organizationData):
                 completion(organizationData, nil)
             }

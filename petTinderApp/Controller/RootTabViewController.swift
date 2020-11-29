@@ -52,35 +52,12 @@ class RootTabViewController: TabmanViewController, ProfileViewControllerProtocol
     func settingsDidGoUp() {
         bar.isUserInteractionEnabled = false
         isScrollEnabled = false
-        
     }
     
     func settingsDidGoDown() {
         bar.isUserInteractionEnabled = true
         isScrollEnabled = true
-        
     }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if isMovingFromParent{
-            print("MOVING FROM PARENT")
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-//        let registrationViewController = RegistrationViewController()
-//        let navController = UINavigationController(rootViewController: registrationViewController)
-//        navController.modalPresentationStyle = .fullScreen
-//        navController.modalTransitionStyle = .crossDissolve
-//        navController.isNavigationBarHidden = true
-//        present(navController, animated: true, completion: nil)
-        
-    }
-    
 }
 
 // MARK: PageboyViewControllerDataSource

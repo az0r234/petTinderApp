@@ -14,6 +14,7 @@ protocol ProducesAnimalCardViewModel {
 
 class AnimalCardViewModel {
     let id : Int
+    let name: String
     let organizationLink: String
     let petFinderUrl : String
     let imageUrl : [String]
@@ -23,8 +24,9 @@ class AnimalCardViewModel {
     let textAlignment : NSTextAlignment
     let placeHolderImage : UIImage
     
-    init(id: Int, organizationLink: String, petFinderUrl: String, imageUrl: [String], croppedImage: String, cardAttributedString: NSAttributedString, description: String ,textAlignment: NSTextAlignment, placeHolderImage: UIImage) {
+    init(id: Int, name: String, organizationLink: String, petFinderUrl: String, imageUrl: [String], croppedImage: String, cardAttributedString: NSAttributedString, description: String ,textAlignment: NSTextAlignment, placeHolderImage: UIImage) {
         self.id = id
+        self.name = name
         self.organizationLink = organizationLink
         self.petFinderUrl = petFinderUrl
         self.imageUrl = imageUrl

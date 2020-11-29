@@ -17,10 +17,6 @@ class StartingScreenViewController: UIViewController {
     var player : AVPlayer!
     var playerLayer : AVPlayerLayer!
     
-
-    
-//    lazy var buttonStackView = UIStackView(arrangedSubviews: [getSwipingBtn])
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,7 +26,6 @@ class StartingScreenViewController: UIViewController {
     }
     
     fileprivate func setupLayout(){
-        
         registerLoginView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(registerLoginView)
         registerLoginView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: view.frame.height * 1/4))
@@ -45,6 +40,22 @@ class StartingScreenViewController: UIViewController {
         view.bringSubviewToFront(registerLoginView)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let isNotOnStartScreen = UserDefaults.standard.bool(forKey: "PressedSwipe")
+        if isNotOnStartScreen{
+            let rootVC = RootTabViewController()
+            rootVC.modalPresentationStyle = .fullScreen
+            present(rootVC, animated: true, completion: nil)
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        player.pause()
+    }
+    
     fileprivate func addRegisterButtons(){
         getSwipingBtn.backgroundColor = .red
         getSwipingBtn.addTarget(self, action: #selector(goToSwipePage), for: .touchUpInside)
@@ -54,12 +65,10 @@ class StartingScreenViewController: UIViewController {
     }
     
     @objc fileprivate func goToSwipePage(){
+        UserDefaults.standard.setValue(true, forKey: "PressedSwipe")
         let rootVC = RootTabViewController()
         rootVC.modalPresentationStyle = .fullScreen
-        rootVC.modalTransitionStyle = .crossDissolve
-        present(rootVC, animated: true) {
-            
-        }
+        present(rootVC, animated: true, completion: nil)
     }
     
     let playerGradientLayer = CAGradientLayer()
@@ -74,7 +83,6 @@ class StartingScreenViewController: UIViewController {
     fileprivate func setupGradientForButton(){
         buttonGradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         buttonGradientLayer.locations = [0, 1.1]
-//        registerLoginView.layer.addSublayer(buttonGradientLayer)
         registerLoginView.layer.insertSublayer(buttonGradientLayer, at: 0)
     }
     
@@ -93,11 +101,6 @@ class StartingScreenViewController: UIViewController {
             self.player.play()
         }
     }
-
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
-    }
     
     fileprivate func playVideo(){
         guard let path = Bundle.main.path(forResource: "intro", ofType: "mp4") else { return }
@@ -112,5 +115,4 @@ class StartingScreenViewController: UIViewController {
         
         player.play()
     }
-
 }

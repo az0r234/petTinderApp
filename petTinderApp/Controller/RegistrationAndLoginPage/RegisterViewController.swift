@@ -85,7 +85,6 @@ class RegisterViewController: UICollectionViewController {
         page = (page > collectionViewArray.count - 1) ? collectionViewArray.count - 1 : page
         let indexPath = IndexPath(item: page, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        
     }
     
     @objc fileprivate func handleGoBack(){
@@ -97,8 +96,6 @@ class RegisterViewController: UICollectionViewController {
         page = (page < 0) ? 0 : page
         let indexPath = IndexPath(item: page, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        
-        
     }
     
 }

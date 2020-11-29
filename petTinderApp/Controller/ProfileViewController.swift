@@ -11,10 +11,15 @@ import LBTATools
 import JGProgressHUD
 import SafariServices
 import CoreLocation
+import RealmSwift
 
 protocol ProfileViewControllerProtocol {
     func settingsDidGoUp()
     func settingsDidGoDown()
+}
+
+protocol ProfileViewControllerLoadPickedAnimal {
+    func loadAnimals()
 }
 
 class ProfileViewController: UIViewController{
@@ -24,19 +29,23 @@ class ProfileViewController: UIViewController{
     let animalPrefBtn = UIButton()
     
     let layout = UICollectionViewFlowLayout()
-//    lazy var animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
     var animalPrefController : AnimalPreferenceController!
     
     var settingsCardMoveUp: NSLayoutConstraint!
     var settingsCardMoveDown: NSLayoutConstraint!
     
     var delegate: ProfileViewControllerProtocol?
+    var loadPickedDelegate: ProfileViewControllerLoadPickedAnimal?
     var settingsCardIsPoppedUp = false
     
     let loadingHud = JGProgressHUD(style: .dark)
     var topCard: CardView?
     let locationManager = CLLocationManager()
     var urlPath = String()
+    
+    lazy var pickedAnimalData = realm.objects(PickedAnimalData.self)
+    let realm = try! Realm()
+    var notificationToken : NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +58,18 @@ class ProfileViewController: UIViewController{
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         
+        
         setupLayoutCardView()
         getLocation()
         animalPrefController.loadAnimalPreferenceData()
+        
+        notificationToken = pickedAnimalData.observe {change in
+            switch change {
+            case .update:
+                self.pickedAnimalData = self.realm.objects(PickedAnimalData.self)
+            default: ()
+            }
+        }
     }
     
     fileprivate func setupLayoutCardView() {
@@ -125,6 +143,19 @@ class ProfileViewController: UIViewController{
         animalPrefController.view.fillSuperview()
     }
     
+}
+
+//MARK: - Data Save Methods
+extension ProfileViewController{
+    func saveData(pickedAnimal: PickedAnimalData){
+        do{
+            try realm.write{
+                realm.add(pickedAnimal)
+            }
+        }catch{
+            print("Error Saving \(error)")
+        }
+    }
 }
 
 //MARK: - Keyboard Notification
@@ -216,27 +247,40 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         
         FetchManager().fetchAnimalData(url: url) { (animalData, error) in
             DispatchQueue.main.async {
+                if error != nil{
+                    self.failedWithError(error: error!)
+                    return
+                }
+                
                 guard let animals = animalData?.animals else { return }
                 guard let pagination = animalData?.pagination else { return }
                 var previousCardView : CardView?
-        
                 let paginationUrl = pagination.links?.next.href
+                var idArray = [Int]()
+                
+                if !self.pickedAnimalData.isEmpty{
+                    for pickedAnimal in self.pickedAnimalData{
+                        idArray.append(pickedAnimal.animalId)
+                    }
+                }
                 
                 if !animals.isEmpty{
                     for animal in animals{
-                        let cardView = self.setupCardsFromAnimals(animal: animal, paginationUrl: paginationUrl)
-                        
-                        previousCardView?.nextCard = cardView
-                        previousCardView?.nextCard?.isHidden = true
-                        previousCardView?.nextCard?.alpha = 0
-                        previousCardView = cardView
-                        
-                        if self.topCard == nil{
-                            self.topCard = cardView
+                        if !idArray.contains(animal.id!){
+                            let cardView = self.setupCardsFromAnimals(animal: animal, paginationUrl: paginationUrl)
+                            
+                            previousCardView?.nextCard = cardView
+                            previousCardView?.nextCard?.isHidden = true
+                            previousCardView?.nextCard?.alpha = 0
+                            previousCardView = cardView
+                            
+                            if self.topCard == nil{
+                                self.topCard = cardView
+                            }
                         }
                     }
                 }else{
-                    self.animalNotFound()
+                    
                 }
             }
         }
@@ -275,6 +319,15 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     }
     
     @objc func handleLike(){
+        let newPetPick = PickedAnimalData()
+        newPetPick.animalId = (topCard?.cardViewModel.id)!
+        newPetPick.animalName = (topCard?.cardViewModel.name)!
+        newPetPick.animalProfileImage = (topCard?.cardViewModel.croppedImageUrl)!
+        newPetPick.animalUrl = (topCard?.cardViewModel.petFinderUrl)!
+        saveData(pickedAnimal: newPetPick)
+        
+        loadPickedDelegate?.loadAnimals()
+        
         performSwipeAnimation(translation: 700, angle: 15)
     }
     
@@ -379,6 +432,10 @@ extension ProfileViewController{
 //MARK: - Error Handling Section
 extension ProfileViewController {
     func failedWithError(error: Error) {
-        print("Error: \(error.localizedDescription)")
+        let localizedError = error.localizedDescription
+        loadingHud.dismiss()
+        let alert = UIAlertController(title: "Error", message: "\(localizedError)\nPlease look at the pets you have swiped on for the time being", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

@@ -7,9 +7,9 @@ target 'petTinderApp' do
 
   # Pods for petTinderApp
   pod 'SDWebImage'
-  pod 'Tabman', '~> 2.9'
-  pod 'Pageboy', '~> 3.6'
-  pod 'LBTATools', '~> 1.0'
-  pod 'JGProgressHUD', '~> 2.2'
-
+  pod 'Tabman'
+  pod 'Pageboy'
+  pod 'LBTATools'
+  pod 'JGProgressHUD'
+  pod 'RealmSwift'
 end
