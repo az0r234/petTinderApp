@@ -21,12 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
+        
+        let startScreen = StartingScreenViewController()
+        window?.rootViewController = startScreen
         window?.makeKeyAndVisible()
         
-        let mainView = RootTabViewController()
-        window?.rootViewController = mainView
-        
     }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

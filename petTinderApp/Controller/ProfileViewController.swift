@@ -11,62 +11,65 @@ import LBTATools
 import JGProgressHUD
 import SafariServices
 import CoreLocation
+import RealmSwift
 
 protocol ProfileViewControllerProtocol {
     func settingsDidGoUp()
     func settingsDidGoDown()
 }
 
+protocol ProfileViewControllerLoadPickedAnimal {
+    func loadAnimals()
+}
+
 class ProfileViewController: UIViewController{
     let cardDeckView = UIView()
-    let layout = UICollectionViewFlowLayout()
-    lazy var animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    let animalSettingsView = UIView()
+    let animalPrefBtn = UIButton()
+    
+    let layout = UICollectionViewFlowLayout()
+    var animalPrefController : AnimalPreferenceController!
+    
     var settingsCardMoveUp: NSLayoutConstraint!
     var settingsCardMoveDown: NSLayoutConstraint!
     
     var delegate: ProfileViewControllerProtocol?
-    var isPoppedUp = false
+    var loadPickedDelegate: ProfileViewControllerLoadPickedAnimal?
+    var settingsCardIsPoppedUp = false
     
-    let hud = JGProgressHUD(style: .dark)
-    var topCard: ProfileImageView?
+    let loadingHud = JGProgressHUD(style: .dark)
+    var topCard: CardView?
     let locationManager = CLLocationManager()
-    let defualtUrlPath = "/v2/animals?sort=distance&limit=20"
-    var path = String()
+    var urlPath = String()
     
-    let animalPrefBtn: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = .red
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(cardExit), for: .touchUpInside)
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        button.layer.cornerRadius = 15
-        return button
-    }()
-    
-    let animalSettingsView: UIView = {
-        let settingsView = UIView()
-        settingsView.translatesAutoresizingMaskIntoConstraints = false
-        settingsView.layer.cornerRadius = 30
-        settingsView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        settingsView.autoresizesSubviews = true
-        settingsView.alpha = 0
-        return settingsView
-    }()
+    lazy var pickedAnimalData = realm.objects(PickedAnimalData.self)
+    let realm = try! Realm()
+    var notificationToken : NotificationToken?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hud.textLabel.text = K.hudLoadingLabel
-        hud.show(in: self.view)
+        animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
+        
+        loadingHud.textLabel.text = K.hudLoadingLabel
+        loadingHud.show(in: self.view)
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         
+        
         setupLayoutCardView()
         getLocation()
         animalPrefController.loadAnimalPreferenceData()
+        
+        notificationToken = pickedAnimalData.observe {change in
+            switch change {
+            case .update:
+                self.pickedAnimalData = self.realm.objects(PickedAnimalData.self)
+            default: ()
+            }
+        }
     }
     
     fileprivate func setupLayoutCardView() {
@@ -77,10 +80,16 @@ class ProfileViewController: UIViewController{
         addCardDeckView()
         addBlurViewAndGesture()
         addSettingsCardView()
-        
     }
     
     fileprivate func addAnimalSettingsBtn() {
+        animalPrefBtn.backgroundColor = .red
+        animalPrefBtn.translatesAutoresizingMaskIntoConstraints = false
+        animalPrefBtn.addTarget(self, action: #selector(cardExit), for: .touchUpInside)
+        animalPrefBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        animalPrefBtn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        animalPrefBtn.layer.cornerRadius = 15
+        
         view.addSubview(animalPrefBtn)
         animalPrefBtn.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 15))
     }
@@ -102,6 +111,12 @@ class ProfileViewController: UIViewController{
     }
     
     fileprivate func addSettingsCardView() {
+        animalSettingsView.translatesAutoresizingMaskIntoConstraints = false
+        animalSettingsView.layer.cornerRadius = 30
+        animalSettingsView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        animalSettingsView.autoresizesSubviews = true
+    
+        
         view.addSubview(animalSettingsView)
         animalSettingsView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: CGSize(width: 0, height: view.frame.height * 2/3))
         
@@ -126,16 +141,70 @@ class ProfileViewController: UIViewController{
         animalPrefController.view.translatesAutoresizingMaskIntoConstraints = false
         animalSettingsView.addSubview(animalPrefController.view)
         animalPrefController.view.fillSuperview()
-        
     }
     
 }
+
+//MARK: - Data Save Methods
+extension ProfileViewController{
+    func saveData(pickedAnimal: PickedAnimalData){
+        do{
+            try realm.write{
+                realm.add(pickedAnimal)
+            }
+        }catch{
+            print("Error Saving \(error)")
+        }
+    }
+}
+
+//MARK: - Keyboard Notification
+//extension ProfileViewController{
+//
+//    fileprivate func setupTapGesture() {
+//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
+//    }
+//
+//    @objc fileprivate func handleTapDismiss() {
+//        self.view.endEditing(true) // dismisses keyboard
+//    }
+//
+//    fileprivate func setupNotificationObservers() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+//
+//    }
+//
+//
+//
+//    @objc fileprivate func handleKeyboardHide() {
+//        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+//            self.view.transform = .identity
+//        })
+//    }
+//
+//    @objc fileprivate func handleKeyboardShow(notification: Notification) {
+//        // how to figure out how tall the keyboard actually is
+//        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+//        let keyboardFrame = value.cgRectValue
+//        print(keyboardFrame)
+//
+//        // let's try to figure out how tall the gap is from the register button to the bottom of the screen
+////        let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
+////        print(bottomSpace)
+//
+//        let bottomSpace = view.frame.height - animalSettingsView.frame.height
+//
+//        let difference = keyboardFrame.height - bottomSpace
+//        self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
+//    }
+//}
 
 //MARK: - Grab User Location
 extension ProfileViewController: CLLocationManagerDelegate{
 
     fileprivate func getLocation(localPath: String = ""){
-        path = "\(defualtUrlPath)&\(localPath)"
+        urlPath = "\(K.defaultUrlPath)&\(localPath)"
         locationManager.requestLocation()
     }
 
@@ -145,8 +214,8 @@ extension ProfileViewController: CLLocationManagerDelegate{
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let long = location.coordinate.longitude
-            path = "\(path)&location=\(lat),\(long)"
-            getAnimalData(urlPath: path)
+            urlPath = "\(urlPath)&location=\(lat),\(long)"
+            getAnimalData(urlPath: urlPath)
         }
     }
 
@@ -161,6 +230,7 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     func didPressMoreInfo(url: String) {
         if let safeUrl = URL(string: url){
             let safariVC = SFSafariViewController(url: safeUrl)
+            safariVC.modalPresentationStyle = .popover
             present(safariVC, animated: true, completion: nil)
         }
     }
@@ -168,36 +238,49 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     //get's the animalData
     func getAnimalData(urlPath: String) {
         let url = "\(K.apiString)\(urlPath)"
+
         topCard = nil
-        
-        hud.textLabel.text = K.hudLoadingLabel
-        hud.show(in: self.view)
+        loadingHud.textLabel.text = K.hudLoadingLabel
+        loadingHud.show(in: self.view)
         
         cardDeckView.subviews.forEach({$0.removeFromSuperview()})
         
         FetchManager().fetchAnimalData(url: url) { (animalData, error) in
             DispatchQueue.main.async {
+                if error != nil{
+                    self.failedWithError(error: error!)
+                    return
+                }
+                
                 guard let animals = animalData?.animals else { return }
                 guard let pagination = animalData?.pagination else { return }
-                var previousCardView : ProfileImageView?
-        
+                var previousCardView : CardView?
                 let paginationUrl = pagination.links?.next.href
+                var idArray = [Int]()
+                
+                if !self.pickedAnimalData.isEmpty{
+                    for pickedAnimal in self.pickedAnimalData{
+                        idArray.append(pickedAnimal.animalId)
+                    }
+                }
                 
                 if !animals.isEmpty{
                     for animal in animals{
-                        let cardView = self.setupCardsFromAnimals(animal: animal, paginationUrl: paginationUrl)
-                        
-                        previousCardView?.nextCard = cardView
-                        previousCardView?.nextCard?.isHidden = true
-                        previousCardView?.nextCard?.alpha = 0
-                        previousCardView = cardView
-                        
-                        if self.topCard == nil{
-                            self.topCard = cardView
+                        if !idArray.contains(animal.id!){
+                            let cardView = self.setupCardsFromAnimals(animal: animal, paginationUrl: paginationUrl)
+                            
+                            previousCardView?.nextCard = cardView
+                            previousCardView?.nextCard?.isHidden = true
+                            previousCardView?.nextCard?.alpha = 0
+                            previousCardView = cardView
+                            
+                            if self.topCard == nil{
+                                self.topCard = cardView
+                            }
                         }
                     }
                 }else{
-                    self.animalNotFound()
+                    
                 }
             }
         }
@@ -205,7 +288,7 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     
     //shows this card when animal not found
     fileprivate func animalNotFound(){
-        let animalNotFound = ProfileImageView()
+        let animalNotFound = CardView()
         animalNotFound.layer.cornerRadius = 20
         animalNotFound.isUserInteractionEnabled = false
         animalNotFound.profileImage.image = #imageLiteral(resourceName: "ResultNotFound")
@@ -219,23 +302,32 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         UIView.animate(withDuration: 0.5) {
             self.cardDeckView.alpha = 1
         }
-        hud.dismiss()
+        loadingHud.dismiss()
     }
     
     //shows animals if card/animal was found
-    fileprivate func setupCardsFromAnimals(animal: Animals, paginationUrl: String?) -> ProfileImageView{
-        let cardView = ProfileImageView()
+    fileprivate func setupCardsFromAnimals(animal: Animals, paginationUrl: String?) -> CardView{
+        let cardView = CardView()
         cardView.cardViewModel = animal.toAnimalCardViewModel()
         cardView.paginationUrl = paginationUrl
         cardView.delegate = self
         cardDeckView.addSubview(cardView)
         cardDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
-        hud.dismiss()
+        loadingHud.dismiss()
         return cardView
     }
     
     @objc func handleLike(){
+        let newPetPick = PickedAnimalData()
+        newPetPick.animalId = (topCard?.cardViewModel.id)!
+        newPetPick.animalName = (topCard?.cardViewModel.name)!
+        newPetPick.animalProfileImage = (topCard?.cardViewModel.croppedImageUrl)!
+        newPetPick.animalUrl = (topCard?.cardViewModel.petFinderUrl)!
+        saveData(pickedAnimal: newPetPick)
+        
+        loadPickedDelegate?.loadAnimals()
+        
         performSwipeAnimation(translation: 700, angle: 15)
     }
     
@@ -275,7 +367,6 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         let cardView = topCard
         topCard = cardView?.nextCard
         
-
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
             self.topCard?.alpha = 1
@@ -294,25 +385,11 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         CATransaction.commit()
     }
     
-//    /v2/animals?
     
     //Sends the data to getAnimalData function
     func sendData(path: String) {
-//        let fullPath = "\(defualtUrlPath)\(path)"
         getLocation(localPath: path)
-        
-        
-//        print(locationManager.location!.coordinate.latitude)
-//        getAnimalData(urlPath: fullPath)
-        
     }
-    
-//    func getLocation(){
-//        if let location = locationManager.location{
-//            let lat = location.coordinate.latitude
-//            let long = location.coordinate.longitude
-//        }
-//    }
     
 }
 
@@ -320,13 +397,13 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
 extension ProfileViewController{
     
     @objc func cardExit(){
-        switch isPoppedUp {
+        switch settingsCardIsPoppedUp {
         case false:
             goUp()
         case true:
             goDown()
         }
-        isPoppedUp.toggle()
+        settingsCardIsPoppedUp.toggle()
     }
     
     fileprivate func goUp() {
@@ -335,7 +412,6 @@ extension ProfileViewController{
             self.settingsCardMoveDown?.isActive = false
             self.view.layoutIfNeeded()
             self.blurView.alpha = 1.0
-            self.animalSettingsView.alpha = 1.0
         } completion: { (_) in
             self.delegate?.settingsDidGoUp()
         }
@@ -347,7 +423,6 @@ extension ProfileViewController{
             self.settingsCardMoveDown?.isActive = true
             self.view.layoutIfNeeded()
             self.blurView.alpha = 0
-            self.animalSettingsView.alpha = 0
         } completion: { (_) in
             self.delegate?.settingsDidGoDown()
         }
@@ -357,6 +432,10 @@ extension ProfileViewController{
 //MARK: - Error Handling Section
 extension ProfileViewController {
     func failedWithError(error: Error) {
-        print("Error: \(error.localizedDescription)")
+        let localizedError = error.localizedDescription
+        loadingHud.dismiss()
+        let alert = UIAlertController(title: "Error", message: "\(localizedError)\nPlease look at the pets you have swiped on for the time being", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

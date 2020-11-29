@@ -18,6 +18,8 @@ struct AnimalData: Codable {
     }
 }
 
+
+
 //MARK: - Animal Object
 struct Animals: Codable, ProducesAnimalCardViewModel{
     
@@ -94,7 +96,7 @@ struct Animals: Codable, ProducesAnimalCardViewModel{
         let placeHolderImage = UIImage(named: type!.lowercased())
 //            , placeHolderImage: placeHolderImage!
         
-        return AnimalCardViewModel(id: id, organizationLink: organizationId!, petFinderUrl: petFinderUrl, imageUrl: imageUrls, croppedImage: croppedImage, cardAttributedString: cardAttributedText, description: description, textAlignment: .left, placeHolderImage: placeHolderImage!)
+        return AnimalCardViewModel(id: id, name: name, organizationLink: organizationId!, petFinderUrl: petFinderUrl, imageUrl: imageUrls, croppedImage: croppedImage, cardAttributedString: cardAttributedText, description: description, textAlignment: .left, placeHolderImage: placeHolderImage!)
     }
     
     fileprivate func getFirstName()->String{

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		997DB5FAF755E37F1D0E7E2D /* Pods_petTinderApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8A1B804969C7FB02D63B88 /* Pods_petTinderApp.framework */; };
 		BF1CD460255CA22700489057 /* AnimalTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1CD45F255CA22700489057 /* AnimalTypes.swift */; };
+		BF274B14256DBAEF00DBEF74 /* SwipingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */; };
+		BF2DBDD025736E7800846156 /* PickedAnimalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DBDCF25736E7800846156 /* PickedAnimalData.swift */; };
 		BF4B3BC125568EF300BD560C /* AnimalPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B3BC025568EF300BD560C /* AnimalPreferences.swift */; };
 		BF4ED089255BB3AD007EB1C0 /* DataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4ED088255BB3AD007EB1C0 /* DataTableView.swift */; };
 		BF5A21D0255A705B002C042F /* ParametersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5A21CF255A705B002C042F /* ParametersButton.swift */; };
@@ -21,12 +23,14 @@
 		BF6FA29324FDCB9200D773C2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */; };
 		BF6FA29524FDCBAD00D773C2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29424FDCBAD00D773C2 /* SettingsViewController.swift */; };
 		BF6FA29724FDCBB900D773C2 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29624FDCBB900D773C2 /* ChatViewController.swift */; };
-		BF6FA29924FDCBEF00D773C2 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29824FDCBEF00D773C2 /* ProfileImageView.swift */; };
+		BF6FA29924FDCBEF00D773C2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29824FDCBEF00D773C2 /* CardView.swift */; };
 		BF87E31E25647C3700B43DBD /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87E31D25647C3700B43DBD /* ParseManager.swift */; };
 		BF90D5692548A92C00C4C6E0 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D5682548A92C00C4C6E0 /* Token.swift */; };
 		BF90D5712548AD2700C4C6E0 /* API-Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D5702548AD2700C4C6E0 /* API-Keys.swift */; };
 		BF90D5742548AD3000C4C6E0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D5732548AD3000C4C6E0 /* Constants.swift */; };
 		BF90D584254A4B0800C4C6E0 /* AnimalData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D583254A4B0800C4C6E0 /* AnimalData.swift */; };
+		BF95DBBF2572E6D2005AFF13 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF95DBBE2572E6D2005AFF13 /* RegisterViewController.swift */; };
+		BF95DBC22572E6DD005AFF13 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF95DBC12572E6DD005AFF13 /* LoginViewController.swift */; };
 		BFB8C1F224F5C0FC00A51315 /* RootTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C1F124F5C0FC00A51315 /* RootTabViewController.swift */; };
 		BFB8C1F924F5C12500A51315 /* TinderBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C1F824F5C12500A51315 /* TinderBarButton.swift */; };
 		BFB8C1FA24F5C12500A51315 /* TinderBarLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C1F624F5C12400A51315 /* TinderBarLayout.swift */; };
@@ -34,8 +38,12 @@
 		BFB8C1FC24F5C12500A51315 /* TinderBarButtonContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C1F724F5C12500A51315 /* TinderBarButtonContainer.swift */; };
 		BFB8C20124F5C24600A51315 /* UIColor+Interpolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C20024F5C24600A51315 /* UIColor+Interpolation.swift */; };
 		BFB8C20324F5C25600A51315 /* TinderColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8C20224F5C25600A51315 /* TinderColors.swift */; };
+		BFB9D8E5256F39E400C2B8EE /* StartingScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9D8E4256F39E400C2B8EE /* StartingScreenViewController.swift */; };
+		BFB9D8E9256F3B6F00C2B8EE /* intro.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BFB9D8E8256F3B6F00C2B8EE /* intro.mp4 */; };
+		BFB9D8EC256F610D00C2B8EE /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB9D8EB256F610D00C2B8EE /* CustomButtons.swift */; };
 		BFC7945C256708F700FFDA60 /* OrganizationCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC7945B256708F700FFDA60 /* OrganizationCardViewModel.swift */; };
 		BFEF417D25636ED700261AE8 /* JsonParserGeneric.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF417C25636ED700261AE8 /* JsonParserGeneric.swift */; };
+		BFF21581257378C20099F818 /* AnimalPickedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF21580257378C20099F818 /* AnimalPickedTableViewCell.swift */; };
 		BFF36532255BD1C2009820CD /* ParameterSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF36531255BD1C2009820CD /* ParameterSlider.swift */; };
 		BFF94E7125635A6500841C82 /* AnimalCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF94E7025635A6500841C82 /* AnimalCardViewModel.swift */; };
 		BFF94E742563613A00841C82 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF94E732563613A00841C82 /* Organization.swift */; };
@@ -47,6 +55,8 @@
 		7D8A1B804969C7FB02D63B88 /* Pods_petTinderApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_petTinderApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE433345AEDC3D9BC94A3943 /* Pods-petTinderApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-petTinderApp.release.xcconfig"; path = "Target Support Files/Pods-petTinderApp/Pods-petTinderApp.release.xcconfig"; sourceTree = "<group>"; };
 		BF1CD45F255CA22700489057 /* AnimalTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalTypes.swift; sourceTree = "<group>"; };
+		BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingViewController.swift; sourceTree = "<group>"; };
+		BF2DBDCF25736E7800846156 /* PickedAnimalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedAnimalData.swift; sourceTree = "<group>"; };
 		BF4B3BC025568EF300BD560C /* AnimalPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalPreferences.swift; sourceTree = "<group>"; };
 		BF4ED088255BB3AD007EB1C0 /* DataTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableView.swift; sourceTree = "<group>"; };
 		BF5A21CF255A705B002C042F /* ParametersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersButton.swift; sourceTree = "<group>"; };
@@ -61,12 +71,14 @@
 		BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BF6FA29424FDCBAD00D773C2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BF6FA29624FDCBB900D773C2 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		BF6FA29824FDCBEF00D773C2 /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		BF6FA29824FDCBEF00D773C2 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		BF87E31D25647C3700B43DBD /* ParseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
 		BF90D5682548A92C00C4C6E0 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		BF90D5702548AD2700C4C6E0 /* API-Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API-Keys.swift"; sourceTree = "<group>"; };
 		BF90D5732548AD3000C4C6E0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BF90D583254A4B0800C4C6E0 /* AnimalData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalData.swift; sourceTree = "<group>"; };
+		BF95DBBE2572E6D2005AFF13 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		BF95DBC12572E6DD005AFF13 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BFB8C1F124F5C0FC00A51315 /* RootTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTabViewController.swift; sourceTree = "<group>"; };
 		BFB8C1F524F5C12400A51315 /* TinderBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinderBar.swift; sourceTree = "<group>"; };
 		BFB8C1F624F5C12400A51315 /* TinderBarLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinderBarLayout.swift; sourceTree = "<group>"; };
@@ -74,8 +86,12 @@
 		BFB8C1F824F5C12500A51315 /* TinderBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinderBarButton.swift; sourceTree = "<group>"; };
 		BFB8C20024F5C24600A51315 /* UIColor+Interpolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Interpolation.swift"; sourceTree = "<group>"; };
 		BFB8C20224F5C25600A51315 /* TinderColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinderColors.swift; sourceTree = "<group>"; };
+		BFB9D8E4256F39E400C2B8EE /* StartingScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingScreenViewController.swift; sourceTree = "<group>"; };
+		BFB9D8E8256F3B6F00C2B8EE /* intro.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = intro.mp4; sourceTree = "<group>"; };
+		BFB9D8EB256F610D00C2B8EE /* CustomButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
 		BFC7945B256708F700FFDA60 /* OrganizationCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationCardViewModel.swift; sourceTree = "<group>"; };
 		BFEF417C25636ED700261AE8 /* JsonParserGeneric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonParserGeneric.swift; sourceTree = "<group>"; };
+		BFF21580257378C20099F818 /* AnimalPickedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalPickedTableViewCell.swift; sourceTree = "<group>"; };
 		BFF36531255BD1C2009820CD /* ParameterSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterSlider.swift; sourceTree = "<group>"; };
 		BFF94E7025635A6500841C82 /* AnimalCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalCardViewModel.swift; sourceTree = "<group>"; };
 		BFF94E732563613A00841C82 /* Organization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
@@ -114,7 +130,7 @@
 		BF4B3BBE25568EC600BD560C /* BioView */ = {
 			isa = PBXGroup;
 			children = (
-				BF6FA29824FDCBEF00D773C2 /* ProfileImageView.swift */,
+				BF6FA29824FDCBEF00D773C2 /* CardView.swift */,
 			);
 			path = BioView;
 			sourceTree = "<group>";
@@ -164,6 +180,7 @@
 				BF6CEE6624F1B41900D1803D /* View */,
 				BF6CEE6524F1B41100D1803D /* Controller */,
 				BFB8C1FF24F5C24600A51315 /* Utilities */,
+				BFB9D8E8256F3B6F00C2B8EE /* intro.mp4 */,
 				BF6CEE5124F1B2DA00D1803D /* SceneDelegate.swift */,
 				BF90D5702548AD2700C4C6E0 /* API-Keys.swift */,
 				BF6CEE4F24F1B2DA00D1803D /* AppDelegate.swift */,
@@ -179,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				BF87E32125647E3100B43DBD /* AnimalModelObject */,
+				BF2DBDCF25736E7800846156 /* PickedAnimalData.swift */,
 				BF87E31D25647C3700B43DBD /* ParseManager.swift */,
 			);
 			path = Model;
@@ -196,11 +214,14 @@
 		BF6CEE6524F1B41100D1803D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				BFB9D8E4256F39E400C2B8EE /* StartingScreenViewController.swift */,
+				BF95DBC52572E6EC005AFF13 /* RegistrationAndLoginPage */,
 				BFB8C1F124F5C0FC00A51315 /* RootTabViewController.swift */,
 				BF6FA29424FDCBAD00D773C2 /* SettingsViewController.swift */,
 				BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */,
 				BF6FA29624FDCBB900D773C2 /* ChatViewController.swift */,
 				BF5A21D4255B3708002C042F /* AnimalPreferenceController.swift */,
+				BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -211,6 +232,8 @@
 				BFB8C1FE24F5C13800A51315 /* TinderBar */,
 				BF4B3BBE25568EC600BD560C /* BioView */,
 				BF5F1285255F602000B563CE /* AnimalPrefCard */,
+				BFB9D8EB256F610D00C2B8EE /* CustomButtons.swift */,
+				BFF21580257378C20099F818 /* AnimalPickedTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -226,6 +249,15 @@
 				BFF94E762563621900841C82 /* SharedModelObjects.swift */,
 			);
 			path = AnimalModelObject;
+			sourceTree = "<group>";
+		};
+		BF95DBC52572E6EC005AFF13 /* RegistrationAndLoginPage */ = {
+			isa = PBXGroup;
+			children = (
+				BF95DBBE2572E6D2005AFF13 /* RegisterViewController.swift */,
+				BF95DBC12572E6DD005AFF13 /* LoginViewController.swift */,
+			);
+			path = RegistrationAndLoginPage;
 			sourceTree = "<group>";
 		};
 		BFB8C1FE24F5C13800A51315 /* TinderBar */ = {
@@ -311,6 +343,7 @@
 			files = (
 				BF6CEE5C24F1B2DB00D1803D /* LaunchScreen.storyboard in Resources */,
 				BF6CEE5924F1B2DB00D1803D /* Assets.xcassets in Resources */,
+				BFB9D8E9256F3B6F00C2B8EE /* intro.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,16 +397,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF87E31E25647C3700B43DBD /* ParseManager.swift in Sources */,
+				BFB9D8EC256F610D00C2B8EE /* CustomButtons.swift in Sources */,
 				BFB8C1F924F5C12500A51315 /* TinderBarButton.swift in Sources */,
 				BF90D5742548AD3000C4C6E0 /* Constants.swift in Sources */,
 				BF5F128B255F858300B563CE /* Breeds.swift in Sources */,
+				BF2DBDD025736E7800846156 /* PickedAnimalData.swift in Sources */,
 				BFB8C1FA24F5C12500A51315 /* TinderBarLayout.swift in Sources */,
 				BF6CEE5024F1B2DA00D1803D /* AppDelegate.swift in Sources */,
 				BF1CD460255CA22700489057 /* AnimalTypes.swift in Sources */,
 				BFB8C1FB24F5C12500A51315 /* TinderBar.swift in Sources */,
 				BF6FA29324FDCB9200D773C2 /* ProfileViewController.swift in Sources */,
 				BF90D5692548A92C00C4C6E0 /* Token.swift in Sources */,
+				BFB9D8E5256F39E400C2B8EE /* StartingScreenViewController.swift in Sources */,
 				BF5A21D0255A705B002C042F /* ParametersButton.swift in Sources */,
+				BF95DBBF2572E6D2005AFF13 /* RegisterViewController.swift in Sources */,
 				BFF94E7125635A6500841C82 /* AnimalCardViewModel.swift in Sources */,
 				BF5A21D5255B3708002C042F /* AnimalPreferenceController.swift in Sources */,
 				BFF94E772563621900841C82 /* SharedModelObjects.swift in Sources */,
@@ -381,14 +418,17 @@
 				BF4B3BC125568EF300BD560C /* AnimalPreferences.swift in Sources */,
 				BFF36532255BD1C2009820CD /* ParameterSlider.swift in Sources */,
 				BF6CEE5224F1B2DA00D1803D /* SceneDelegate.swift in Sources */,
-				BF6FA29924FDCBEF00D773C2 /* ProfileImageView.swift in Sources */,
+				BF6FA29924FDCBEF00D773C2 /* CardView.swift in Sources */,
 				BFEF417D25636ED700261AE8 /* JsonParserGeneric.swift in Sources */,
 				BFB8C1FC24F5C12500A51315 /* TinderBarButtonContainer.swift in Sources */,
 				BFF94E742563613A00841C82 /* Organization.swift in Sources */,
 				BF6FA29724FDCBB900D773C2 /* ChatViewController.swift in Sources */,
+				BF274B14256DBAEF00DBEF74 /* SwipingViewController.swift in Sources */,
 				BF90D5712548AD2700C4C6E0 /* API-Keys.swift in Sources */,
+				BF95DBC22572E6DD005AFF13 /* LoginViewController.swift in Sources */,
 				BF6FA29524FDCBAD00D773C2 /* SettingsViewController.swift in Sources */,
 				BF4ED089255BB3AD007EB1C0 /* DataTableView.swift in Sources */,
+				BFF21581257378C20099F818 /* AnimalPickedTableViewCell.swift in Sources */,
 				BFB8C20324F5C25600A51315 /* TinderColors.swift in Sources */,
 				BFB8C1F224F5C0FC00A51315 /* RootTabViewController.swift in Sources */,
 				BF90D584254A4B0800C4C6E0 /* AnimalData.swift in Sources */,
