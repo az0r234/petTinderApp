@@ -23,8 +23,6 @@ class AnimalCardViewModel {
     let textAlignment : NSTextAlignment
     let placeHolderImage : UIImage
     
-        
-    
     init(id: Int, organizationLink: String, petFinderUrl: String, imageUrl: [String], croppedImage: String, cardAttributedString: NSAttributedString, description: String ,textAlignment: NSTextAlignment, placeHolderImage: UIImage) {
         self.id = id
         self.organizationLink = organizationLink

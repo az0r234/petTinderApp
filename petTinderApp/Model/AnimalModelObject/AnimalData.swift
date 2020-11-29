@@ -18,6 +18,8 @@ struct AnimalData: Codable {
     }
 }
 
+
+
 //MARK: - Animal Object
 struct Animals: Codable, ProducesAnimalCardViewModel{
     

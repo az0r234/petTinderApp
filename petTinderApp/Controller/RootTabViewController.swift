@@ -45,8 +45,6 @@ class RootTabViewController: TabmanViewController, ProfileViewControllerProtocol
         navigationController?.navigationBar.isHidden = true
         let darkView = UIView()
         darkView.backgroundColor = .black
-        darkView.layer.borderColor = .none
-        darkView.layer.borderWidth = .zero
         view.addSubview(darkView)
         darkView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -1, right: 0))
     }
@@ -54,16 +52,34 @@ class RootTabViewController: TabmanViewController, ProfileViewControllerProtocol
     func settingsDidGoUp() {
         bar.isUserInteractionEnabled = false
         isScrollEnabled = false
+        
     }
     
     func settingsDidGoDown() {
         bar.isUserInteractionEnabled = true
         isScrollEnabled = true
+        
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if isMovingFromParent{
+            print("MOVING FROM PARENT")
+        }
     }
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        .darkContent
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        let registrationViewController = RegistrationViewController()
+//        let navController = UINavigationController(rootViewController: registrationViewController)
+//        navController.modalPresentationStyle = .fullScreen
+//        navController.modalTransitionStyle = .crossDissolve
+//        navController.isNavigationBarHidden = true
+//        present(navController, animated: true, completion: nil)
+        
+    }
     
 }
 

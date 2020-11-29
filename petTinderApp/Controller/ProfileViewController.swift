@@ -24,8 +24,8 @@ class ProfileViewController: UIViewController{
     let animalPrefBtn = UIButton()
     
     let layout = UICollectionViewFlowLayout()
-    lazy var animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
-//    lazy var animalSettingsView = animalPrefController.view!
+//    lazy var animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
+    var animalPrefController : AnimalPreferenceController!
     
     var settingsCardMoveUp: NSLayoutConstraint!
     var settingsCardMoveDown: NSLayoutConstraint!
@@ -40,6 +40,8 @@ class ProfileViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
         
         loadingHud.textLabel.text = K.hudLoadingLabel
         loadingHud.show(in: self.view)
@@ -126,44 +128,46 @@ class ProfileViewController: UIViewController{
 }
 
 //MARK: - Keyboard Notification
-extension ProfileViewController{
-    
-    fileprivate func setupTapGesture() {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
-    }
-    
-    @objc fileprivate func handleTapDismiss() {
-        self.view.endEditing(true) // dismisses keyboard
-    }
-    
-    fileprivate func setupNotificationObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-    }
-
-    @objc fileprivate func handleKeyboardHide() {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.transform = .identity
-        })
-    }
-
-    @objc fileprivate func handleKeyboardShow(notification: Notification) {
-        // how to figure out how tall the keyboard actually is
-        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let keyboardFrame = value.cgRectValue
-        print(keyboardFrame)
-
-        // let's try to figure out how tall the gap is from the register button to the bottom of the screen
-//        let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
-//        print(bottomSpace)
-
-        let bottomSpace = view.frame.height - animalSettingsView.frame.height
-
-        let difference = keyboardFrame.height - bottomSpace
-        self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
-    }
-}
+//extension ProfileViewController{
+//
+//    fileprivate func setupTapGesture() {
+//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
+//    }
+//
+//    @objc fileprivate func handleTapDismiss() {
+//        self.view.endEditing(true) // dismisses keyboard
+//    }
+//
+//    fileprivate func setupNotificationObservers() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+//
+//    }
+//
+//
+//
+//    @objc fileprivate func handleKeyboardHide() {
+//        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+//            self.view.transform = .identity
+//        })
+//    }
+//
+//    @objc fileprivate func handleKeyboardShow(notification: Notification) {
+//        // how to figure out how tall the keyboard actually is
+//        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+//        let keyboardFrame = value.cgRectValue
+//        print(keyboardFrame)
+//
+//        // let's try to figure out how tall the gap is from the register button to the bottom of the screen
+////        let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
+////        print(bottomSpace)
+//
+//        let bottomSpace = view.frame.height - animalSettingsView.frame.height
+//
+//        let difference = keyboardFrame.height - bottomSpace
+//        self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
+//    }
+//}
 
 //MARK: - Grab User Location
 extension ProfileViewController: CLLocationManagerDelegate{
@@ -203,8 +207,8 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     //get's the animalData
     func getAnimalData(urlPath: String) {
         let url = "\(K.apiString)\(urlPath)"
+
         topCard = nil
-        
         loadingHud.textLabel.text = K.hudLoadingLabel
         loadingHud.show(in: self.view)
         
