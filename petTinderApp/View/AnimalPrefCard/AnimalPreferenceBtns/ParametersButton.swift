@@ -22,7 +22,6 @@ class ParametersButtons: UIButton {
         
         setupButtonAttr()
         setLabels()
-        
         addLabelsToSubview()
         
     }
@@ -37,6 +36,7 @@ class ParametersButtons: UIButton {
     fileprivate func setLabels(){
         leftLbl.translatesAutoresizingMaskIntoConstraints = false
         leftLbl.text = leftLabel
+        leftLbl.textColor = .black
         leftLbl.font = UIFont.boldSystemFont(ofSize: 18)
         leftLbl.textAlignment = .left
         
@@ -54,7 +54,6 @@ class ParametersButtons: UIButton {
         leftLbl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
         rightLbl.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         rightLbl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15).isActive = true
-        
     }
 
     required init?(coder: NSCoder) {

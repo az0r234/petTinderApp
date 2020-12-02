@@ -1,6 +1,7 @@
 PODS:
   - JGProgressHUD (2.2)
   - LBTATools (1.0.12)
+  - lottie-ios (3.1.9)
   - Pageboy (3.6.2)
   - Realm (10.1.4):
     - Realm/Headers (= 10.1.4)
@@ -16,6 +17,7 @@ PODS:
 DEPENDENCIES:
   - JGProgressHUD
   - LBTATools
+  - lottie-ios
   - Pageboy
   - RealmSwift
   - SDWebImage
@@ -25,6 +27,7 @@ SPEC REPOS:
   trunk:
     - JGProgressHUD
     - LBTATools
+    - lottie-ios
     - Pageboy
     - Realm
     - RealmSwift
@@ -34,12 +37,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   LBTATools: 389a901a01b9a56bea5682c40cd6e23530f40015
+  lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   Realm: 80f4fb2971ccb9adc27a47d0955ae8e533a7030b
   RealmSwift: 0e566ca714edb377bba8ea0811eafcea0b93734e
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
 
-PODFILE CHECKSUM: 4a73dec386b7a544f8fdbfb9d112cd6958d8bc11
+PODFILE CHECKSUM: 4e783a2fd4d94671ff1f262f0fa9a37faf923cca
 
 COCOAPODS: 1.10.0

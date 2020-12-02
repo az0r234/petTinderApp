@@ -29,6 +29,7 @@ class CustomButton: UIButton {
         label.text = centerLabel
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textAlignment = .center
+        label.textColor = .black
         
         addSubview(label)
         label.centerInSuperview()

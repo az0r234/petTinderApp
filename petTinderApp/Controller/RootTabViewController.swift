@@ -15,18 +15,17 @@ import LBTATools
 class RootTabViewController: TabmanViewController, ProfileViewControllerProtocol{
     
     enum Tab: String, CaseIterable {
-        case profile
-        case matches
-        case messages
+        case info
+        case paw
+        case map
     }
-    
     
     let settingsVC = SettingsViewController()
     let profileVC = ProfileViewController()
-    let chatVC = ChatViewController()
+    let pickedAnimalsVC = PickedAnimalsViewController()
     
     private let tabItems = Tab.allCases.map({ BarItem(for: $0) })
-    private lazy var viewControllers = [settingsVC, profileVC, chatVC]
+    private lazy var viewControllers = [settingsVC, profileVC, pickedAnimalsVC]
     let bar = TinderBar.make()
     
     // MARK: Lifecycle
@@ -101,11 +100,12 @@ private class BarItem: TMBarItemable {
     }
     
     private var _image: UIImage? {
-        return UIImage(named: "ic_\(tab.rawValue)")
+//        return UIImage(named: "\(tab.rawValue)")
+        return UIImage(named: "\(tab.rawValue).png")
     }
     var image: UIImage? {
         get {
-            return _image
+            return _image?.withRenderingMode(.alwaysTemplate)
         } set {}
     }
 }

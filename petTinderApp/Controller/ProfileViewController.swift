@@ -18,10 +18,6 @@ protocol ProfileViewControllerProtocol {
     func settingsDidGoDown()
 }
 
-protocol ProfileViewControllerLoadPickedAnimal {
-    func loadAnimals()
-}
-
 class ProfileViewController: UIViewController{
     let cardDeckView = UIView()
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -35,15 +31,15 @@ class ProfileViewController: UIViewController{
     var settingsCardMoveDown: NSLayoutConstraint!
     
     var delegate: ProfileViewControllerProtocol?
-    var loadPickedDelegate: ProfileViewControllerLoadPickedAnimal?
     var settingsCardIsPoppedUp = false
+    var isLocationEnabled = false
     
     let loadingHud = JGProgressHUD(style: .dark)
     var topCard: CardView?
     let locationManager = CLLocationManager()
     var urlPath = String()
     
-    lazy var pickedAnimalData = realm.objects(PickedAnimalData.self)
+    lazy var pickedAnimalData = realm.objects(PickedAnimalObject.self)
     let realm = try! Realm()
     var notificationToken : NotificationToken?
     
@@ -52,21 +48,16 @@ class ProfileViewController: UIViewController{
         
         animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
         
-        loadingHud.textLabel.text = K.hudLoadingLabel
-        loadingHud.show(in: self.view)
-        
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
         
         
         setupLayoutCardView()
-        getLocation()
+        getLocationIfAvailable()
         animalPrefController.loadAnimalPreferenceData()
         
         notificationToken = pickedAnimalData.observe {change in
             switch change {
             case .update:
-                self.pickedAnimalData = self.realm.objects(PickedAnimalData.self)
+                self.pickedAnimalData = self.realm.objects(PickedAnimalObject.self)
             default: ()
             }
         }
@@ -147,80 +138,72 @@ class ProfileViewController: UIViewController{
 
 //MARK: - Data Save Methods
 extension ProfileViewController{
-    func saveData(pickedAnimal: PickedAnimalData){
+    func saveData(pickedAnimal: PickedAnimalObject){
         do{
             try realm.write{
                 realm.add(pickedAnimal)
             }
         }catch{
-            print("Error Saving \(error)")
+            failedWithError(error: error)
         }
     }
 }
 
-//MARK: - Keyboard Notification
-//extension ProfileViewController{
-//
-//    fileprivate func setupTapGesture() {
-//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
-//    }
-//
-//    @objc fileprivate func handleTapDismiss() {
-//        self.view.endEditing(true) // dismisses keyboard
-//    }
-//
-//    fileprivate func setupNotificationObservers() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-//
-//    }
-//
-//
-//
-//    @objc fileprivate func handleKeyboardHide() {
-//        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-//            self.view.transform = .identity
-//        })
-//    }
-//
-//    @objc fileprivate func handleKeyboardShow(notification: Notification) {
-//        // how to figure out how tall the keyboard actually is
-//        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-//        let keyboardFrame = value.cgRectValue
-//        print(keyboardFrame)
-//
-//        // let's try to figure out how tall the gap is from the register button to the bottom of the screen
-////        let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
-////        print(bottomSpace)
-//
-//        let bottomSpace = view.frame.height - animalSettingsView.frame.height
-//
-//        let difference = keyboardFrame.height - bottomSpace
-//        self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
-//    }
-//}
-
 //MARK: - Grab User Location
 extension ProfileViewController: CLLocationManagerDelegate{
 
-    fileprivate func getLocation(localPath: String = ""){
+    fileprivate func getLocationIfAvailable(localPath: String = ""){
         urlPath = "\(K.defaultUrlPath)&\(localPath)"
-        locationManager.requestLocation()
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
     }
-
+    
+    fileprivate func getLocationIfUnavailable(localPath: String = ""){
+        urlPath = "\(K.defaultUrlPath)&location"
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+            break
+        case .authorizedWhenInUse:
+            isLocationEnabled = true
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+            break
+        case .authorizedAlways:
+            isLocationEnabled = true
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+            break
+        case .denied:
+//            isLocationEnabled = false
+//            let hasBeenAskedToChangeLocation = UserDefaults.standard.bool(forKey: "hasBeenAskedForLocation")
+//            print(hasBeenAskedToChangeLocation)
+//            if hasBeenAskedToChangeLocation{
+//                print("yeet")
+//            }else{
+            alertViewMaker(alertTitle: K.enableLocationErrorTitle, alertMessage: K.enableLocationError, actionTitle: K.okString)
+            break
+        default:
+            break
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         if let location = locations.last{
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let long = location.coordinate.longitude
             urlPath = "\(urlPath)&location=\(lat),\(long)"
+            loadingHud.textLabel.text = "Loading Animals"
             getAnimalData(urlPath: urlPath)
         }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
+        failedWithError(error: error)
     }
 }
 
@@ -240,7 +223,6 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         let url = "\(K.apiString)\(urlPath)"
 
         topCard = nil
-        loadingHud.textLabel.text = K.hudLoadingLabel
         loadingHud.show(in: self.view)
         
         cardDeckView.subviews.forEach({$0.removeFromSuperview()})
@@ -319,14 +301,12 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     }
     
     @objc func handleLike(){
-        let newPetPick = PickedAnimalData()
+        let newPetPick = PickedAnimalObject()
         newPetPick.animalId = (topCard?.cardViewModel.id)!
         newPetPick.animalName = (topCard?.cardViewModel.name)!
         newPetPick.animalProfileImage = (topCard?.cardViewModel.croppedImageUrl)!
         newPetPick.animalUrl = (topCard?.cardViewModel.petFinderUrl)!
         saveData(pickedAnimal: newPetPick)
-        
-        loadPickedDelegate?.loadAnimals()
         
         performSwipeAnimation(translation: 700, angle: 15)
     }
@@ -358,6 +338,7 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         
         if topCard?.nextCard == nil{
             if let nextPage = topCard?.paginationUrl{
+                loadingHud.textLabel.text = "Loading Animals"
                 getAnimalData(urlPath: nextPage)
             }else{
                 animalNotFound()
@@ -388,7 +369,7 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     
     //Sends the data to getAnimalData function
     func sendData(path: String) {
-        getLocation(localPath: path)
+        getLocationIfAvailable(localPath: path)
     }
     
 }
@@ -431,11 +412,17 @@ extension ProfileViewController{
 
 //MARK: - Error Handling Section
 extension ProfileViewController {
-    func failedWithError(error: Error) {
+    fileprivate func failedWithError(error: Error) {
         let localizedError = error.localizedDescription
         loadingHud.dismiss()
-        let alert = UIAlertController(title: "Error", message: "\(localizedError)\nPlease look at the pets you have swiped on for the time being", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        alertViewMaker(alertTitle: K.errorTitle, alertMessage: "\(localizedError)\n\(K.errorSuggestion)", actionTitle: K.okString)
+    }
+    
+    fileprivate func alertViewMaker(alertTitle: String, alertMessage: String, actionTitle: String){
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+
 }

@@ -23,6 +23,7 @@ class ParameterSlider: UIView {
     
     let titleLabel : UILabel = {
         let title = UILabel()
+        title.textColor = .black
         title.translatesAutoresizingMaskIntoConstraints = false
         title.font = UIFont.boldSystemFont(ofSize: 18)
         title.textAlignment = .left
@@ -31,6 +32,7 @@ class ParameterSlider: UIView {
     
     let itemLabel : UILabel = {
         let item = UILabel()
+        item.textColor = .black
         item.font = UIFont.boldSystemFont(ofSize: 15)
         item.textAlignment = .center
         return item

@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         
-        let startScreen = StartingScreenViewController()
+        let startScreen = SplashViewController()
         window?.rootViewController = startScreen
         window?.makeKeyAndVisible()
         

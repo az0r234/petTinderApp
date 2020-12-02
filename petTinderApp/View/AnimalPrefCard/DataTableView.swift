@@ -18,12 +18,13 @@ class DataTableView: UIView {
         s.translatesAutoresizingMaskIntoConstraints = false
         s.heightAnchor.constraint(equalToConstant: 35).isActive = true
         s.searchBarStyle = .prominent
-        s.sizeToFit()
         s.backgroundImage = UIImage()
         return s
     }()
     let tableView: UITableView = {
         let t = UITableView()
+        t.allowsMultipleSelection = false
+        t.backgroundColor = .white
         t.translatesAutoresizingMaskIntoConstraints = false
         t.heightAnchor.constraint(equalToConstant: 100).isActive = true
         t.separatorStyle = .none
@@ -31,6 +32,7 @@ class DataTableView: UIView {
     }()
     
     let goBack = CustomButton(centerLabel: K.backBtn)
+    let dataTblStackView = UIStackView()
     
     var delegate: OptionSelected?
     var dataDictionary = [String:[String]]()
@@ -64,16 +66,23 @@ class DataTableView: UIView {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
     }
     
+
     fileprivate func addButtonStackToView() {
         goBack.backgroundColor = .cyan
-        let stackView = UIStackView(arrangedSubviews: [searchBar, tableView, goBack])
-        stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillProportionally
-        stackView.spacing = 5
+        [searchBar, tableView, goBack].forEach { (view) in
+            dataTblStackView.addArrangedSubview(view)
+        }
+        dataTblStackView.axis = .vertical
+        dataTblStackView.translatesAutoresizingMaskIntoConstraints = false
+        dataTblStackView.distribution = .fillProportionally
+        dataTblStackView.spacing = 5
         
-        addSubview(stackView)
-        stackView.fillSuperview(padding: .init(top: 10, left: 15, bottom: 25, right: 15))
+        addSubview(dataTblStackView)
+        dataTblStackView.fillSuperview(padding: .init(top: 10, left: 10, bottom: 15, right: 10))
+    }
+    
+    override func layoutSubviews() {
+        
     }
     
     fileprivate func sortByAlphabeticalOrder(datas : [String]) {
@@ -124,10 +133,14 @@ extension DataTableView: UITableViewDataSource, UITableViewDelegate{
         if let dataValue = dataDictionary[dataKey]{
             cell.textLabel?.text = dataValue[indexPath.row]
         }
+        cell.backgroundColor = .white
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        cell.textLabel?.textColor = .black
         cell.textLabel?.textAlignment = .left
         return cell
     }
+    
+
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return dataSectionTitles[section]
@@ -171,8 +184,5 @@ extension DataTableView: UISearchBarDelegate{
         } completion: { (_) in
             
         }
-
-        
-        
     }
 }
