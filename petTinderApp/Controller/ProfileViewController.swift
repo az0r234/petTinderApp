@@ -11,7 +11,7 @@ import LBTATools
 import JGProgressHUD
 import SafariServices
 import CoreLocation
-import RealmSwift
+import CoreData
 
 protocol ProfileViewControllerProtocol {
     func settingsDidGoUp()
@@ -33,34 +33,28 @@ class ProfileViewController: UIViewController{
     var delegate: ProfileViewControllerProtocol?
     var settingsCardIsPoppedUp = false
     var isLocationEnabled = false
+    var foundDuplicate = false
     
     let loadingHud = JGProgressHUD(style: .dark)
     var topCard: CardView?
     let locationManager = CLLocationManager()
     var urlPath = String()
     
-    lazy var pickedAnimalData = realm.objects(PickedAnimalObject.self)
-    let realm = try! Realm()
-    var notificationToken : NotificationToken?
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var pickedAnimals : [PickedAnimals]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
-        
-        
-        
         setupLayoutCardView()
+        fetchPickedAnimalData()
         getLocationIfAvailable()
-        animalPrefController.loadAnimalPreferenceData()
-        
-        notificationToken = pickedAnimalData.observe {change in
-            switch change {
-            case .update:
-                self.pickedAnimalData = self.realm.objects(PickedAnimalObject.self)
-            default: ()
-            }
-        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchPickedAnimalData()
     }
     
     fileprivate func setupLayoutCardView() {
@@ -131,31 +125,25 @@ class ProfileViewController: UIViewController{
         layout.scrollDirection = .horizontal
         animalPrefController.view.translatesAutoresizingMaskIntoConstraints = false
         animalSettingsView.addSubview(animalPrefController.view)
+        animalPrefController.didMove(toParent: self)
         animalPrefController.view.fillSuperview()
+        
+        animalPrefController.viewDidLoad()
     }
     
-}
-
-//MARK: - Data Save Methods
-extension ProfileViewController{
-    func saveData(pickedAnimal: PickedAnimalObject){
-        do{
-            try realm.write{
-                realm.add(pickedAnimal)
-            }
-        }catch{
-            failedWithError(error: error)
-        }
-    }
 }
 
 //MARK: - Grab User Location
 extension ProfileViewController: CLLocationManagerDelegate{
 
     fileprivate func getLocationIfAvailable(localPath: String = ""){
-        urlPath = "\(K.defaultUrlPath)&\(localPath)"
+        let didAskUserForLocationPermission = UserDefaults.standard.bool(forKey: "didAskUserForLocationPermission")
+        urlPath = "\(K.defaultUrlPath)\(localPath)"
         locationManager.delegate = self
-        locationManager.startUpdatingLocation()
+        if didAskUserForLocationPermission{
+            locationManager.requestLocation()
+            locationManager.startUpdatingLocation()
+        }
     }
     
     fileprivate func getLocationIfUnavailable(localPath: String = ""){
@@ -163,6 +151,7 @@ extension ProfileViewController: CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        UserDefaults.standard.setValue(true, forKey: "didAskUserForLocationPermission")
         switch status {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
@@ -170,11 +159,13 @@ extension ProfileViewController: CLLocationManagerDelegate{
         case .authorizedWhenInUse:
             isLocationEnabled = true
             locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
             locationManager.startUpdatingLocation()
             break
         case .authorizedAlways:
             isLocationEnabled = true
             locationManager.requestAlwaysAuthorization()
+            locationManager.requestLocation()
             locationManager.startUpdatingLocation()
             break
         case .denied:
@@ -203,7 +194,8 @@ extension ProfileViewController: CLLocationManagerDelegate{
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        failedWithError(error: error)
+//        failedWithError(error: error)
+        print(error.localizedDescription)
     }
 }
 
@@ -236,19 +228,23 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
                 
                 guard let animals = animalData?.animals else { return }
                 guard let pagination = animalData?.pagination else { return }
+                guard let pickedAnimalsVal = self.pickedAnimals else { return }
+                
                 var previousCardView : CardView?
                 let paginationUrl = pagination.links?.next.href
                 var idArray = [Int]()
                 
-                if !self.pickedAnimalData.isEmpty{
-                    for pickedAnimal in self.pickedAnimalData{
-                        idArray.append(pickedAnimal.animalId)
+                
+                if pickedAnimalsVal.isEmpty {
+                    for pickedAnimal in pickedAnimalsVal{
+                        idArray.append(Int(pickedAnimal.animalId))
                     }
                 }
                 
                 if !animals.isEmpty{
                     for animal in animals{
                         if !idArray.contains(animal.id!){
+                            self.foundDuplicate = false
                             let cardView = self.setupCardsFromAnimals(animal: animal, paginationUrl: paginationUrl)
                             
                             previousCardView?.nextCard = cardView
@@ -259,10 +255,20 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
                             if self.topCard == nil{
                                 self.topCard = cardView
                             }
+                        }else{
+                            self.foundDuplicate = true
+                            self.loadingHud.dismiss()
+                            continue;
                         }
                     }
                 }else{
-                    
+                    self.loadingHud.dismiss()
+//                    self.getAnimalData(urlPath: paginationUrl!)
+                    print(url)
+                }
+                
+                if self.foundDuplicate{
+                    self.getAnimalData(urlPath: paginationUrl!)
                 }
             }
         }
@@ -301,11 +307,12 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     }
     
     @objc func handleLike(){
-        let newPetPick = PickedAnimalObject()
-        newPetPick.animalId = (topCard?.cardViewModel.id)!
-        newPetPick.animalName = (topCard?.cardViewModel.name)!
-        newPetPick.animalProfileImage = (topCard?.cardViewModel.croppedImageUrl)!
-        newPetPick.animalUrl = (topCard?.cardViewModel.petFinderUrl)!
+        let newPetPick = PickedAnimals(context: context)
+        newPetPick.animalId = Int64((topCard?.cardViewModel.id)!)
+        newPetPick.animalName = topCard?.cardViewModel.name
+        newPetPick.animalProfileImageUrl = topCard?.cardViewModel.croppedImageUrl
+        newPetPick.animalUrl = topCard?.cardViewModel.petFinderUrl
+        newPetPick.animalPlaceHolderString = topCard?.cardViewModel.placeHolderImage
         saveData(pickedAnimal: newPetPick)
         
         performSwipeAnimation(translation: 700, angle: 15)
@@ -339,6 +346,7 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         if topCard?.nextCard == nil{
             if let nextPage = topCard?.paginationUrl{
                 loadingHud.textLabel.text = "Loading Animals"
+                fetchPickedAnimalData()
                 getAnimalData(urlPath: nextPage)
             }else{
                 animalNotFound()
@@ -366,12 +374,31 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         CATransaction.commit()
     }
     
-    
     //Sends the data to getAnimalData function
     func sendData(path: String) {
         getLocationIfAvailable(localPath: path)
     }
     
+}
+
+//MARK: - Data Save & Fetch Methods
+extension ProfileViewController{
+    fileprivate func saveData(pickedAnimal: PickedAnimals){
+        do {
+            try self.context.save()
+        } catch {
+            failedWithError(error: error)
+        }
+        
+    }
+    
+    fileprivate func fetchPickedAnimalData(){
+        do{
+            self.pickedAnimals = try context.fetch(PickedAnimals.fetchRequest())
+        }catch{
+            failedWithError(error: error)
+        }
+    }
 }
 
 //MARK: - Handle Preference Buttons
@@ -389,6 +416,7 @@ extension ProfileViewController{
     
     fileprivate func goUp() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.3, options: .curveEaseInOut) {
+            self.animalPrefController.viewWillAppear(true)
             self.settingsCardMoveUp?.isActive = true
             self.settingsCardMoveDown?.isActive = false
             self.view.layoutIfNeeded()
@@ -400,6 +428,7 @@ extension ProfileViewController{
     
     fileprivate func goDown() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut) {
+            self.animalPrefController.viewWillDisappear(true)
             self.settingsCardMoveUp?.isActive = false
             self.settingsCardMoveDown?.isActive = true
             self.view.layoutIfNeeded()

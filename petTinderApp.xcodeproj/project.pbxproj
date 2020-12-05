@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		997DB5FAF755E37F1D0E7E2D /* Pods_petTinderApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8A1B804969C7FB02D63B88 /* Pods_petTinderApp.framework */; };
+		BF1BA0502579C9FB00E9C42B /* PickedAnimals+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1BA04E2579C9FB00E9C42B /* PickedAnimals+CoreDataClass.swift */; };
+		BF1BA0512579C9FB00E9C42B /* PickedAnimals+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1BA04F2579C9FB00E9C42B /* PickedAnimals+CoreDataProperties.swift */; };
 		BF1CD460255CA22700489057 /* AnimalTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1CD45F255CA22700489057 /* AnimalTypes.swift */; };
 		BF274B14256DBAEF00DBEF74 /* SwipingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */; };
-		BF2DBDD025736E7800846156 /* PickedAnimalObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2DBDCF25736E7800846156 /* PickedAnimalObject.swift */; };
+		BF39DA6C25777F8600F81C3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF39DA6B25777F8600F81C3C /* LaunchScreen.storyboard */; };
+		BF4317ED257AF6F200D4FF6C /* testCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4317EC257AF6F200D4FF6C /* testCollectionViewController.swift */; };
+		BF4317F0257B16A400D4FF6C /* TopSlidingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4317EF257B16A400D4FF6C /* TopSlidingBar.swift */; };
 		BF4B3BC125568EF300BD560C /* AnimalPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4B3BC025568EF300BD560C /* AnimalPreferences.swift */; };
 		BF4ED089255BB3AD007EB1C0 /* DataTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4ED088255BB3AD007EB1C0 /* DataTableView.swift */; };
 		BF5A21D0255A705B002C042F /* ParametersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5A21CF255A705B002C042F /* ParametersButton.swift */; };
 		BF5A21D5255B3708002C042F /* AnimalPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5A21D4255B3708002C042F /* AnimalPreferenceController.swift */; };
 		BF5F128B255F858300B563CE /* Breeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5F128A255F858300B563CE /* Breeds.swift */; };
-		BF61E2BC2577368C003B6052 /* Launcher.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF61E2BB2577368C003B6052 /* Launcher.storyboard */; };
 		BF6CEE5024F1B2DA00D1803D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CEE4F24F1B2DA00D1803D /* AppDelegate.swift */; };
 		BF6CEE5224F1B2DA00D1803D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CEE5124F1B2DA00D1803D /* SceneDelegate.swift */; };
 		BF6CEE5924F1B2DB00D1803D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF6CEE5824F1B2DB00D1803D /* Assets.xcassets */; };
 		BF6DFAF0257629AA00AD31E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DFAEF257629AA00AD31E2 /* SplashViewController.swift */; };
 		BF6DFB0025762D9D00AD31E2 /* dog.json in Resources */ = {isa = PBXBuildFile; fileRef = BF6DFAFF25762D9D00AD31E2 /* dog.json */; };
+		BF6E0D592579BDA100E74D3F /* PickedAnimalModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF6E0D572579BDA100E74D3F /* PickedAnimalModel.xcdatamodeld */; };
 		BF6FA29324FDCB9200D773C2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */; };
 		BF6FA29524FDCBAD00D773C2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29424FDCBAD00D773C2 /* SettingsViewController.swift */; };
 		BF6FA29724FDCBB900D773C2 /* PickedAnimalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6FA29624FDCBB900D773C2 /* PickedAnimalsViewController.swift */; };
@@ -56,15 +60,18 @@
 		4E97B7ECC05D95CA8E5147F8 /* Pods-petTinderApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-petTinderApp.debug.xcconfig"; path = "Target Support Files/Pods-petTinderApp/Pods-petTinderApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7D8A1B804969C7FB02D63B88 /* Pods_petTinderApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_petTinderApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE433345AEDC3D9BC94A3943 /* Pods-petTinderApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-petTinderApp.release.xcconfig"; path = "Target Support Files/Pods-petTinderApp/Pods-petTinderApp.release.xcconfig"; sourceTree = "<group>"; };
+		BF1BA04E2579C9FB00E9C42B /* PickedAnimals+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PickedAnimals+CoreDataClass.swift"; sourceTree = "<group>"; };
+		BF1BA04F2579C9FB00E9C42B /* PickedAnimals+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PickedAnimals+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BF1CD45F255CA22700489057 /* AnimalTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalTypes.swift; sourceTree = "<group>"; };
 		BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingViewController.swift; sourceTree = "<group>"; };
-		BF2DBDCF25736E7800846156 /* PickedAnimalObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedAnimalObject.swift; sourceTree = "<group>"; };
+		BF39DA6B25777F8600F81C3C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BF4317EC257AF6F200D4FF6C /* testCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testCollectionViewController.swift; sourceTree = "<group>"; };
+		BF4317EF257B16A400D4FF6C /* TopSlidingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSlidingBar.swift; sourceTree = "<group>"; };
 		BF4B3BC025568EF300BD560C /* AnimalPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalPreferences.swift; sourceTree = "<group>"; };
 		BF4ED088255BB3AD007EB1C0 /* DataTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTableView.swift; sourceTree = "<group>"; };
 		BF5A21CF255A705B002C042F /* ParametersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersButton.swift; sourceTree = "<group>"; };
 		BF5A21D4255B3708002C042F /* AnimalPreferenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalPreferenceController.swift; sourceTree = "<group>"; };
 		BF5F128A255F858300B563CE /* Breeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breeds.swift; sourceTree = "<group>"; };
-		BF61E2BB2577368C003B6052 /* Launcher.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launcher.storyboard; sourceTree = "<group>"; };
 		BF6CEE4C24F1B2DA00D1803D /* petTinderApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = petTinderApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF6CEE4F24F1B2DA00D1803D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF6CEE5124F1B2DA00D1803D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +79,7 @@
 		BF6CEE5D24F1B2DB00D1803D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF6DFAEF257629AA00AD31E2 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		BF6DFAFF25762D9D00AD31E2 /* dog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dog.json; sourceTree = "<group>"; };
+		BF6E0D582579BDA100E74D3F /* PickedAnimalModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PickedAnimalModel.xcdatamodel; sourceTree = "<group>"; };
 		BF6FA29224FDCB9200D773C2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BF6FA29424FDCBAD00D773C2 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		BF6FA29624FDCBB900D773C2 /* PickedAnimalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedAnimalsViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +137,15 @@
 				AE433345AEDC3D9BC94A3943 /* Pods-petTinderApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		BF1BA0662579ED0400E9C42B /* PickedAnimalObject */ = {
+			isa = PBXGroup;
+			children = (
+				BF1BA04E2579C9FB00E9C42B /* PickedAnimals+CoreDataClass.swift */,
+				BF1BA04F2579C9FB00E9C42B /* PickedAnimals+CoreDataProperties.swift */,
+			);
+			path = PickedAnimalObject;
 			sourceTree = "<group>";
 		};
 		BF4B3BBE25568EC600BD560C /* CardView */ = {
@@ -190,6 +207,8 @@
 				BF6CEE4F24F1B2DA00D1803D /* AppDelegate.swift */,
 				BF6CEE5824F1B2DB00D1803D /* Assets.xcassets */,
 				BF6CEE5D24F1B2DB00D1803D /* Info.plist */,
+				BF39DA6B25777F8600F81C3C /* LaunchScreen.storyboard */,
+				BF6E0D572579BDA100E74D3F /* PickedAnimalModel.xcdatamodeld */,
 			);
 			path = petTinderApp;
 			sourceTree = "<group>";
@@ -198,8 +217,8 @@
 			isa = PBXGroup;
 			children = (
 				BF87E32125647E3100B43DBD /* AnimalModelObject */,
-				BF2DBDCF25736E7800846156 /* PickedAnimalObject.swift */,
 				BF87E31D25647C3700B43DBD /* ParseManager.swift */,
+				BF1BA0662579ED0400E9C42B /* PickedAnimalObject */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -224,7 +243,7 @@
 				BF5A21D4255B3708002C042F /* AnimalPreferenceController.swift */,
 				BF274B13256DBAEF00DBEF74 /* SwipingViewController.swift */,
 				BF6DFAEF257629AA00AD31E2 /* SplashViewController.swift */,
-				BF61E2BB2577368C003B6052 /* Launcher.storyboard */,
+				BF4317EC257AF6F200D4FF6C /* testCollectionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -237,6 +256,7 @@
 				BF5F1285255F602000B563CE /* AnimalPrefCard */,
 				BFB9D8EB256F610D00C2B8EE /* CustomButtons.swift */,
 				BFF21580257378C20099F818 /* AnimalPickedTableViewCell.swift */,
+				BF4317EF257B16A400D4FF6C /* TopSlidingBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -355,7 +375,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF61E2BC2577368C003B6052 /* Launcher.storyboard in Resources */,
+				BF39DA6C25777F8600F81C3C /* LaunchScreen.storyboard in Resources */,
 				BF6CEE5924F1B2DB00D1803D /* Assets.xcassets in Resources */,
 				BF6DFB0025762D9D00AD31E2 /* dog.json in Resources */,
 				BFB9D8E9256F3B6F00C2B8EE /* intro.mp4 in Resources */,
@@ -412,14 +432,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF87E31E25647C3700B43DBD /* ParseManager.swift in Sources */,
+				BF6E0D592579BDA100E74D3F /* PickedAnimalModel.xcdatamodeld in Sources */,
 				BFB9D8EC256F610D00C2B8EE /* CustomButtons.swift in Sources */,
 				BFB8C1F924F5C12500A51315 /* TinderBarButton.swift in Sources */,
 				BF90D5742548AD3000C4C6E0 /* Constants.swift in Sources */,
 				BF5F128B255F858300B563CE /* Breeds.swift in Sources */,
-				BF2DBDD025736E7800846156 /* PickedAnimalObject.swift in Sources */,
 				BFB8C1FA24F5C12500A51315 /* TinderBarLayout.swift in Sources */,
 				BF6CEE5024F1B2DA00D1803D /* AppDelegate.swift in Sources */,
 				BF1CD460255CA22700489057 /* AnimalTypes.swift in Sources */,
+				BF4317ED257AF6F200D4FF6C /* testCollectionViewController.swift in Sources */,
 				BFB8C1FB24F5C12500A51315 /* TinderBar.swift in Sources */,
 				BF6FA29324FDCB9200D773C2 /* ProfileViewController.swift in Sources */,
 				BF90D5692548A92C00C4C6E0 /* Token.swift in Sources */,
@@ -433,13 +454,16 @@
 				BF4B3BC125568EF300BD560C /* AnimalPreferences.swift in Sources */,
 				BFF36532255BD1C2009820CD /* ParameterSlider.swift in Sources */,
 				BF6CEE5224F1B2DA00D1803D /* SceneDelegate.swift in Sources */,
+				BF1BA0502579C9FB00E9C42B /* PickedAnimals+CoreDataClass.swift in Sources */,
 				BF6FA29924FDCBEF00D773C2 /* CardView.swift in Sources */,
 				BFEF417D25636ED700261AE8 /* JsonParserGeneric.swift in Sources */,
 				BFB8C1FC24F5C12500A51315 /* TinderBarButtonContainer.swift in Sources */,
 				BFF94E742563613A00841C82 /* Organization.swift in Sources */,
 				BF6FA29724FDCBB900D773C2 /* PickedAnimalsViewController.swift in Sources */,
 				BF274B14256DBAEF00DBEF74 /* SwipingViewController.swift in Sources */,
+				BF4317F0257B16A400D4FF6C /* TopSlidingBar.swift in Sources */,
 				BF90D5712548AD2700C4C6E0 /* API-Keys.swift in Sources */,
+				BF1BA0512579C9FB00E9C42B /* PickedAnimals+CoreDataProperties.swift in Sources */,
 				BF95DBC22572E6DD005AFF13 /* LoginViewController.swift in Sources */,
 				BF6FA29524FDCBAD00D773C2 /* SettingsViewController.swift in Sources */,
 				BF4ED089255BB3AD007EB1C0 /* DataTableView.swift in Sources */,
@@ -633,6 +657,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BF6E0D572579BDA100E74D3F /* PickedAnimalModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BF6E0D582579BDA100E74D3F /* PickedAnimalModel.xcdatamodel */,
+			);
+			currentVersion = BF6E0D582579BDA100E74D3F /* PickedAnimalModel.xcdatamodel */;
+			path = PickedAnimalModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BF6CEE4424F1B2DA00D1803D /* Project object */;
 }

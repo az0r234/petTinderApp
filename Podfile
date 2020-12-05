@@ -11,6 +11,5 @@ target 'petTinderApp' do
   pod 'Pageboy'
   pod 'LBTATools'
   pod 'JGProgressHUD'
-  pod 'RealmSwift'
   pod 'lottie-ios'
 end

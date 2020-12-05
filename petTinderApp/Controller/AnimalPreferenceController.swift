@@ -38,6 +38,18 @@ class AnimalPreferenceController: UICollectionViewController {
         setDelegates() //sets all the delegates needed
         registerAndSetupCollection() //registers the collectionview cell
         setButtonTargets() //sets target for each buttons
+        loadAnimalPreferenceData()
+    }
+//
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        loadAnimalPreferenceData()
+//    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        goBack()
     }
     
     fileprivate func setButtonTargets(){

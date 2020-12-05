@@ -7,16 +7,17 @@
 //
 
 import UIKit
-import RealmSwift
 import SDWebImage
 import SafariServices
+import CoreData
 
-class PickedAnimalsViewController: UITableViewController{
+class PickedAnimalsViewController: UIViewController{
     
-    lazy var pickedAnimalData = realm.objects(PickedAnimalObject.self)
-    let realm = try! Realm()
-    var profileVC = ProfileViewController()
-    var notificationToken : NotificationToken?
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var pickedAnimals : [PickedAnimals]?
+    
+    let searchBar = UISearchBar()
+    let tableView = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,90 +28,107 @@ class PickedAnimalsViewController: UITableViewController{
         tableView.dataSource = self
         tableView.register(AnimalPickedTableViewCell.self, forCellReuseIdentifier: "cellId")
         
-        setupNotification()
-    }
-    
-    fileprivate func setupNotification(){
-        notificationToken = pickedAnimalData.observe { change in
-            switch change {
-            case .initial:
-                self.removeSeperatorIfPickedAnimalEmpty()
-            case .update:
-                self.pickedAnimalData = self.realm.objects(PickedAnimalObject.self)
-                self.removeSeperatorIfPickedAnimalEmpty()
-            default: ()
-            }
-        }
+        fetchPickedAnimalData()
+        setupSearchBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        removeSeperatorIfPickedAnimalEmpty()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        notificationToken?.invalidate()
+        fetchPickedAnimalData()
     }
     
     fileprivate func removeSeperatorIfPickedAnimalEmpty(){
-        if pickedAnimalData.isEmpty{
+        if pickedAnimals!.isEmpty{
             tableView.separatorStyle = .none
-            tableView.reloadData()
         }else{
             tableView.separatorStyle = .singleLine
-            tableView.reloadData()
         }
     }
-
+    
+    fileprivate func setupSearchBar(){
+        
+        view.addSubview(tableView)
+        tableView.fillSuperview()
+        
+        view.addSubview(searchBar)
+        searchBar.anchor(top: nil, leading: view.leadingAnchor, bottom: tableView.topAnchor, trailing: view.trailingAnchor)
+    }
 }
 
 //MARK: - TableView Methods
-extension PickedAnimalsViewController {
+extension PickedAnimalsViewController: UITableViewDelegate, UITableViewDataSource{
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pickedAnimalData.count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return pickedAnimals!.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.3
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! AnimalPickedTableViewCell
-        if let imageURL = URL(string: (pickedAnimalData[indexPath.row].animalProfileImage)){
-            cell.profileImageView.sd_setImage(with: imageURL)
-        }else{
-            cell.profileImageView.image = #imageLiteral(resourceName: "dog")
+        
+        if let pickedAnimalDataVal = pickedAnimals?[indexPath.row]{
+            if let imageURL = URL(string: (pickedAnimalDataVal.animalProfileImageUrl!)){
+                cell.profileImageView.sd_setImage(with: imageURL, placeholderImage: nil, options: .continueInBackground, context: nil)
+            }else{
+                cell.profileImageView.image = UIImage(named: pickedAnimalDataVal.animalPlaceHolderString!)
+            }
+            cell.nameLabel.text = pickedAnimals?[indexPath.row].animalName
         }
-        cell.nameLabel.text = pickedAnimalData[indexPath.row].animalName
+        cell.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:))))
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let url = pickedAnimalData[indexPath.row].animalUrl
+    @objc fileprivate func handleLongPress(gesture: UILongPressGestureRecognizer){
+        switch gesture.state {
+        case .began:
+            let touchPoint = gesture.location(in: self.tableView)
+            showActionSheet(touchPoint: touchPoint)
+        case .failed:
+            print("failed")
+        default:
+            break
+        }
+    }
+    
+    fileprivate func showActionSheet(touchPoint: CGPoint){
+        guard let indexPath = tableView.indexPathForRow(at: touchPoint) else { return }
+        
+        tableView.performBatchUpdates {
+            self.deletePickedData(at: indexPath)
+            self.tableView.deleteRows(at: [indexPath], with: .middle)
+        } completion: { (_) in
+
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let url = pickedAnimals?[indexPath.row].animalUrl else {return}
         tableView.deselectRow(at: indexPath, animated: true)
         didPressMoreInfo(url: url)
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete{
-            updateModel(at: indexPath)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        tableView.performBatchUpdates {
+//            self.updateModel(at: indexPath)
+//            self.tableView.deleteRows(at: [indexPath], with: .fade)
+//        } completion: { (_) in
+//
+//        }
+//    }
+//
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
-    
-    
-    func updateModel(at indexPath: IndexPath) {
-        let pickedPetForDeletion = self.pickedAnimalData[indexPath.row]
-        do{
-            try self.realm.write{
-                self.realm.delete(pickedPetForDeletion)
-            }
-        }catch{
-            print("Error deleting category, \(error)")
-        }
-    }
+//
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+//            completionHandler(false)
+//        }
+//        deleteAction.image = UIImage(systemName: "trash")
+//        deleteAction.backgroundColor = .red
+//        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+//        return config
+//    }
     
     func didPressMoreInfo(url: String) {
         if let safeUrl = URL(string: url){
@@ -118,6 +136,58 @@ extension PickedAnimalsViewController {
             safariVC.modalPresentationStyle = .popover
             present(safariVC, animated: true, completion: nil)
         }
+    }
+}
+
+//MARK: - Data Save & Fetch Methods
+extension PickedAnimalsViewController{
+    fileprivate func saveData(pickedAnimal: PickedAnimals){
+        do {
+            try self.context.save()
+        } catch {
+            failedWithError(error: error)
+        }
+    }
+    
+    func deletePickedData(at indexPath: IndexPath) {
+        let pickedPetForDeletion = self.pickedAnimals![indexPath.row]
+        self.context.delete(pickedPetForDeletion)
+        do{
+            try self.context.save()
+        }catch{
+            failedWithError(error: error)
+        }
+        fetchPickedAnimalData()
+    }
+    
+    fileprivate func fetchPickedAnimalData(){
+        do{
+            self.pickedAnimals = try context.fetch(PickedAnimals.fetchRequest())
+        }catch{
+            failedWithError(error: error)
+        }
+        removeSeperatorIfPickedAnimalEmpty()
+        tableView.reloadData()
+        UIView.transition(with: tableView, duration: 0.4, options: [.curveEaseInOut, .transitionCrossDissolve]) {
+            self.tableView.reloadData()
+        } completion: { (_) in
+            
+        }
+
+    }
+}
+
+//MARK: - Error Handling Section
+extension PickedAnimalsViewController {
+    fileprivate func failedWithError(error: Error) {
+        let localizedError = error.localizedDescription
+        alertViewMaker(alertTitle: K.errorTitle, alertMessage: "\(localizedError)\n\(K.errorSuggestion)", actionTitle: K.okString)
+    }
+    
+    fileprivate func alertViewMaker(alertTitle: String, alertMessage: String, actionTitle: String){
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

@@ -33,19 +33,10 @@ class RootTabViewController: TabmanViewController, ProfileViewControllerProtocol
         super.viewDidLoad()
         
         dataSource = self
+        delegate = self
         profileVC.delegate = self
         isScrollEnabled = true
         addBar(bar, dataSource: self, at: .top)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.navigationBar.isHidden = true
-        let darkView = UIView()
-        darkView.backgroundColor = .black
-        view.addSubview(darkView)
-        darkView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -1, right: 0))
     }
     
     func settingsDidGoUp() {

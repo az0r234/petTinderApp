@@ -93,10 +93,10 @@ struct Animals: Codable, ProducesAnimalCardViewModel{
         
         let croppedImage = primaryPhotoCropped?.small != nil ? self.primaryPhotoCropped!.small! : ""
         
-        let placeHolderImage = UIImage(named: type!.lowercased())
+        let placeHolderImage = type!.lowercased()
 //            , placeHolderImage: placeHolderImage!
         
-        return AnimalCardViewModel(id: id, name: name, organizationLink: organizationId!, petFinderUrl: petFinderUrl, imageUrl: imageUrls, croppedImage: croppedImage, cardAttributedString: cardAttributedText, description: description, textAlignment: .left, placeHolderImage: placeHolderImage!)
+        return AnimalCardViewModel(id: id, name: name, organizationLink: organizationId!, petFinderUrl: petFinderUrl, imageUrl: imageUrls, croppedImage: croppedImage, cardAttributedString: cardAttributedText, description: description, textAlignment: .left, placeHolderImage: placeHolderImage)
     }
     
     fileprivate func getFirstName()->String{

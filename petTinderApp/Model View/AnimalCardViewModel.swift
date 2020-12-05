@@ -22,9 +22,9 @@ class AnimalCardViewModel {
     let cardAttributedString : NSAttributedString
     let description: String
     let textAlignment : NSTextAlignment
-    let placeHolderImage : UIImage
+    let placeHolderImage : String
     
-    init(id: Int, name: String, organizationLink: String, petFinderUrl: String, imageUrl: [String], croppedImage: String, cardAttributedString: NSAttributedString, description: String ,textAlignment: NSTextAlignment, placeHolderImage: UIImage) {
+    init(id: Int, name: String, organizationLink: String, petFinderUrl: String, imageUrl: [String], croppedImage: String, cardAttributedString: NSAttributedString, description: String ,textAlignment: NSTextAlignment, placeHolderImage: String) {
         self.id = id
         self.name = name
         self.organizationLink = organizationLink

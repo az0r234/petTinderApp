@@ -14,7 +14,7 @@ class AnimalPickedTableViewCell: UITableViewCell {
     
     let nameLabel: UILabel = {
        let lbl = UILabel()
-        lbl.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        lbl.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
         lbl.textAlignment = .left
         lbl.numberOfLines = 0
         lbl.textColor = .black
@@ -26,10 +26,12 @@ class AnimalPickedTableViewCell: UITableViewCell {
         setupCell()
     }
     
+    
     fileprivate func setupCell(){
-        let profileImageWidth: CGFloat = 80
+        let profileImageWidth: CGFloat = 100
         backgroundColor = .white
         profileImageView.clipsToBounds = true
+        profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.cornerRadius = profileImageWidth / 2
         addSubview(profileImageView)
         profileImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, padding: .init(top: 10, left: 10, bottom: 10, right: 0), size: .init(width: profileImageWidth, height: profileImageWidth))

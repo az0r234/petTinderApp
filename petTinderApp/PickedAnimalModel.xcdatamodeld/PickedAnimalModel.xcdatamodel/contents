@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="PickedAnimals" representedClassName="PickedAnimals" syncable="YES">
+        <attribute name="animalId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="animalName" optional="YES" attributeType="String"/>
+        <attribute name="animalPlaceHolderString" optional="YES" attributeType="String"/>
+        <attribute name="animalProfileImageUrl" optional="YES" attributeType="String"/>
+        <attribute name="animalUrl" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="PickedAnimals" positionX="-63" positionY="-18" width="128" height="104"/>
+    </elements>
+</model>

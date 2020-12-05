@@ -13,30 +13,25 @@ class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSou
     var cardViewModel: AnimalCardViewModel! {
         didSet{
             if cardViewModel.imageUrl.isEmpty{
-                let placeHolderController = UIViewController()
-                let imageView = UIImageView()
-                imageView.image = cardViewModel.placeHolderImage
-                placeHolderController.view.addSubview(imageView)
-                imageView.fillSuperview()
-                controllers.append(placeHolderController)
+                let placeHolderImage = PhotoController(placeHolderImage: cardViewModel.placeHolderImage)
+                controllers = [placeHolderImage]
             }else{
                 controllers = cardViewModel.imageUrl.map({ (imageUrl) -> UIViewController in
                     let photoController = PhotoController(imageURl: imageUrl, placeHolderImage: cardViewModel.placeHolderImage)
                     return photoController
                 })
             }
-            
             setViewControllers([controllers.first!], direction: .forward, animated: false)
-            
             setupBarViews()
         }
     }
     
     fileprivate let barsStackView = UIStackView(arrangedSubviews: [])
     fileprivate let deselectedBarColor = UIColor(white: 0, alpha: 0.1)
+    fileprivate let tapNextOrBack = UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture:)))
     
     fileprivate func setupBarViews(){
-        cardViewModel.imageUrl.forEach { (_) in
+        controllers.forEach { (_) in
             let barView = UIView()
             barView.backgroundColor = deselectedBarColor
             barView.layer.cornerRadius = 2
@@ -135,9 +130,12 @@ class PhotoController: UIViewController {
     let imageView = UIImageView()
     
     //provide an initilizer that takes a url instead
-    init(imageURl: String, placeHolderImage: UIImage){
+    init(imageURl: String = "", placeHolderImage: String = ""){
+        let placeHolder = UIImage(named: placeHolderImage)
         if let url = URL(string: imageURl){
-            imageView.sd_setImage(with: url, placeholderImage: placeHolderImage)
+            imageView.sd_setImage(with: url, placeholderImage: placeHolder, options: .continueInBackground)
+        }else{
+            imageView.image = placeHolder
         }
         super.init(nibName: nil, bundle: nil)
     }
