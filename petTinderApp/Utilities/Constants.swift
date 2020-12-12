@@ -5,7 +5,7 @@
 //  Created by Marcy Vernon on 8/3/20.
 //
 
-import Foundation
+import UIKit
 
 struct K {
     
@@ -13,7 +13,7 @@ struct K {
     
     static let tokenString = "https://api.petfinder.com/v2/oauth2/token"
     static let apiString = "https://api.petfinder.com"
-    static let defaultUrlPath = "/v2/animals?sort=random&limit=50&"
+    static let defaultUrlPath = "/v2/animals?sort=random&limit=20&"
     
     static let hudLoadingLabel = "Loading Animals"
     
@@ -21,35 +21,47 @@ struct K {
     static let smallFurry = "Small & Furry"
     static let formattedSmallFurry = "small-furry"
     static let scalesFinsOthers = "Scales, Fins & Other"
-    static let FormattedScalesFinsOthers = "scales-fins-other"
-    
-    
-    static let typeBtn = "Animal Type"
-    static let breedBtn = "Breed"
-    static let colorBtn = "Color"
-    static let coatBtn = "Coat Type"
-    
-    static let sizeBtn = "Size"
-    static let genderBtn = "Gender"
-    static let ageBtn = "Age"
-    static let rangeBtn = "Range"
+    static let formattedScalesFinsOthers = "scales-fins-other"
     
     static let sizeArray = ["Random","Small", "Medium", "Large", "Xlarge"]
     static let genderArray = ["Random", "Male", "Female", "Unknown"]
     static let ageArray = ["Random", "Baby", "Young", "Adult", "Senior"]
     static let rangeArray = (100...500).map { (mile) -> String in return String(mile)}
     
-    static let resetBtn = "Reset"
-    static let exitBtn = "Exit"
-    static let submitBtn = "Submit"
-    static let backBtn = "Go Back"
-    
-    static let enableLocationErrorTitle = "Location Denied"
     static let enableLocationError = "Location is denied. Please go to Settings > Privacy > Location Services > Pet Tinder and then enable location services. Thank you!"
-    static let okString = "OK"
     
-    static let errorTitle = "Error"
     static let errorSuggestion = "Please look at the pets you have swiped on for the time being"
+    
+    static func randomNumGen()->CGFloat{
+        return CGFloat(Int.random(in: 1...255))
+    }
+}
+
+enum ButtonTitles: String {
+    case AnimalType = "Animal Type"
+    case Breed = "Breed"
+    case Color = "Color"
+    case Coat = "Coat Type"
+    case Reset = "Reset"
+    case Exit = "Exit"
+    case Submit = "Submit"
+    case Back = "Go Back"
+    case Error = "Error"
+    case Random = "Random"
+    case Swiping = "Get Swiping"
+    case Ok = "OK"
+    case LocationError = "Location Denied"
+    case Size = "Size"
+    case Gender = "Gender"
+    case Age = "Age"
+    case Range = "Range"
+}
+
+enum SliderTitles: String{
+    case Size = "Size"
+    case Gender = "Gender"
+    case Age = "Age"
+    case Range = "Range"
 }
 
 enum HttpMethod: String {

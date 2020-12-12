@@ -22,10 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let startScreen = testCollectionViewController(collectionViewLayout: layout)
+        let startScreen = SplashViewController()
         window?.rootViewController = startScreen
         window?.makeKeyAndVisible()
         

@@ -10,8 +10,8 @@ import UIKit
 
 class ParameterSlider: UIView {
     
+    let titleLbl : SliderTitles
     let sliderItems : [String]
-    let titleLbl : String
     
     lazy var slider: UISlider = {
         let slider = UISlider()
@@ -38,9 +38,9 @@ class ParameterSlider: UIView {
         return item
     }()
     
-    init(items: [String], titleLbl: String) {
-        self.sliderItems = items
+    init(items: [String], titleLbl: SliderTitles) {
         self.titleLbl = titleLbl
+        self.sliderItems = items
         super.init(frame: .zero)
         
         backgroundColor = .cyan
@@ -48,7 +48,7 @@ class ParameterSlider: UIView {
         sizeToFit()
         
         titleLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        titleLabel.text = self.titleLbl
+        titleLabel.text = self.titleLbl.rawValue
         
         itemLabel.text = sliderItems.first
         

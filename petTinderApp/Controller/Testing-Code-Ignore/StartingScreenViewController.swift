@@ -13,7 +13,7 @@ class StartingScreenViewController: UIViewController {
     
     let playerView = UIView()
     let registerLoginView = UIView()
-    let getSwipingBtn = CustomButton(centerLabel: "Get Swiping")
+    let getSwipingBtn = CustomButton(centerLabel: .Swiping, background: .red)
     var player : AVPlayer!
     var playerLayer : AVPlayerLayer!
     
@@ -57,7 +57,6 @@ class StartingScreenViewController: UIViewController {
     }
     
     fileprivate func addRegisterButtons(){
-        getSwipingBtn.backgroundColor = .red
         getSwipingBtn.addTarget(self, action: #selector(goToSwipePage), for: .touchUpInside)
         registerLoginView.addSubview(getSwipingBtn)
         getSwipingBtn.centerInSuperview()

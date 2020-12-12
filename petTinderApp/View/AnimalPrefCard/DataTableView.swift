@@ -31,7 +31,7 @@ class DataTableView: UIView {
         return t
     }()
     
-    let goBack = CustomButton(centerLabel: K.backBtn)
+    let goBack = CustomButton(centerLabel: .Back, background: .cyan)
     let dataTblStackView = UIStackView()
     
     var delegate: OptionSelected?

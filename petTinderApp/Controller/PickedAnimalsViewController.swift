@@ -21,8 +21,9 @@ class PickedAnimalsViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        tableView.showsHorizontalScrollIndicator = false
+        
+        tableView.alwaysBounceVertical = false
+        tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = .white
         tableView.delegate = self
         tableView.dataSource = self
@@ -96,7 +97,7 @@ extension PickedAnimalsViewController: UITableViewDelegate, UITableViewDataSourc
             self.deletePickedData(at: indexPath)
             self.tableView.deleteRows(at: [indexPath], with: .middle)
         } completion: { (_) in
-
+            
         }
     }
     
@@ -106,29 +107,10 @@ extension PickedAnimalsViewController: UITableViewDelegate, UITableViewDataSourc
         tableView.deselectRow(at: indexPath, animated: true)
         didPressMoreInfo(url: url)
     }
-    
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        tableView.performBatchUpdates {
-//            self.updateModel(at: indexPath)
-//            self.tableView.deleteRows(at: [indexPath], with: .fade)
-//        } completion: { (_) in
-//
-//        }
-//    }
-//
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-//
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
-//            completionHandler(false)
-//        }
-//        deleteAction.image = UIImage(systemName: "trash")
-//        deleteAction.backgroundColor = .red
-//        let config = UISwipeActionsConfiguration(actions: [deleteAction])
-//        return config
-//    }
     
     func didPressMoreInfo(url: String) {
         if let safeUrl = URL(string: url){
@@ -168,12 +150,11 @@ extension PickedAnimalsViewController{
         }
         removeSeperatorIfPickedAnimalEmpty()
         tableView.reloadData()
-        UIView.transition(with: tableView, duration: 0.4, options: [.curveEaseInOut, .transitionCrossDissolve]) {
-            self.tableView.reloadData()
-        } completion: { (_) in
-            
-        }
-
+//        UIView.transition(with: tableView, duration: 0.4, options: [.curveEaseInOut, .transitionCrossDissolve]) {
+//            self.tableView.reloadData()
+//        } completion: { (_) in
+//
+//        }
     }
 }
 
@@ -181,7 +162,7 @@ extension PickedAnimalsViewController{
 extension PickedAnimalsViewController {
     fileprivate func failedWithError(error: Error) {
         let localizedError = error.localizedDescription
-        alertViewMaker(alertTitle: K.errorTitle, alertMessage: "\(localizedError)\n\(K.errorSuggestion)", actionTitle: K.okString)
+        alertViewMaker(alertTitle: ButtonTitles.Error.rawValue, alertMessage: "\(localizedError)\n\(K.errorSuggestion)", actionTitle: ButtonTitles.Ok.rawValue)
     }
     
     fileprivate func alertViewMaker(alertTitle: String, alertMessage: String, actionTitle: String){

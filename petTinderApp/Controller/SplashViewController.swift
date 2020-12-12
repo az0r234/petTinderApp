@@ -49,7 +49,8 @@ class SplashViewController: UIViewController {
     }
 
     fileprivate func presentRootVC(){
-        let rootVC = RootTabViewController()
+        let layout = UICollectionViewFlowLayout()
+        let rootVC = RootViewController(collectionViewLayout: layout)
         rootVC.modalPresentationStyle = .fullScreen
         rootVC.modalTransitionStyle = .crossDissolve
         present(rootVC, animated: true, completion: nil)

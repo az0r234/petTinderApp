@@ -213,11 +213,11 @@ extension AnimalPreferenceController: OptionSelected{
         let color = formatString(input: preferenceBtnView.colorBtn.rightLbl.text!)
         let coat = formatString(input: preferenceBtnView.coatBtn.rightLbl.text!)
         
-        let size = formatString(input: preferenceBtnView.sizeBtn.itemLabel.text!)
-        let gender = formatString(input: preferenceBtnView.genderBtn.itemLabel.text!)
-        let age = formatString(input: preferenceBtnView.ageBtn.itemLabel.text!)
+        let size = formatString(input: preferenceBtnView.sizeSlider.itemLabel.text!)
+        let gender = formatString(input: preferenceBtnView.genderSlider.itemLabel.text!)
+        let age = formatString(input: preferenceBtnView.ageSlider.itemLabel.text!)
         
-        let locationRange = preferenceBtnView.locationRange.itemLabel.text!
+        let locationRange = preferenceBtnView.rangeSlider.itemLabel.text!
         
         let path = "type=\(animalType)&breed=\(breed)&color=\(color)&coat=\(coat)&size=\(size)&gender=\(gender)&age=\(age)&distance=\(locationRange)"
         
@@ -232,7 +232,7 @@ extension AnimalPreferenceController: OptionSelected{
         }else if input == K.smallFurry{
             return K.formattedSmallFurry
         }else if input == K.scalesFinsOthers{
-            return K.FormattedScalesFinsOthers
+            return K.formattedScalesFinsOthers
         }
         return input
     }

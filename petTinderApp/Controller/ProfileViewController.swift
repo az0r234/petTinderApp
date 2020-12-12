@@ -46,6 +46,7 @@ class ProfileViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        locationManager.requestWhenInUseAuthorization()
         animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
         setupLayoutCardView()
         fetchPickedAnimalData()
@@ -69,14 +70,23 @@ class ProfileViewController: UIViewController{
     
     fileprivate func addAnimalSettingsBtn() {
         animalPrefBtn.backgroundColor = .red
-        animalPrefBtn.translatesAutoresizingMaskIntoConstraints = false
-        animalPrefBtn.addTarget(self, action: #selector(cardExit), for: .touchUpInside)
-        animalPrefBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        animalPrefBtn.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        animalPrefBtn.addTarget(self, action: #selector(testFunc), for: .touchUpInside)
         animalPrefBtn.layer.cornerRadius = 15
         
         view.addSubview(animalPrefBtn)
-        animalPrefBtn.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 15))
+        animalPrefBtn.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 15), size: .init(width: 50, height: 50))
+    }
+    
+//    var settings = Settings()
+    
+    var settings: Settings? = {
+        let launcher = Settings()
+        return launcher
+    }()
+    
+    @objc fileprivate func testFunc(){
+        print(UIScreen.main.scale)
+        settings?.showSettings()
     }
     
     fileprivate func addCardDeckView() {
@@ -96,7 +106,6 @@ class ProfileViewController: UIViewController{
     }
     
     fileprivate func addSettingsCardView() {
-        animalSettingsView.translatesAutoresizingMaskIntoConstraints = false
         animalSettingsView.layer.cornerRadius = 30
         animalSettingsView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         animalSettingsView.autoresizesSubviews = true
@@ -127,7 +136,6 @@ class ProfileViewController: UIViewController{
         animalSettingsView.addSubview(animalPrefController.view)
         animalPrefController.didMove(toParent: self)
         animalPrefController.view.fillSuperview()
-        
         animalPrefController.viewDidLoad()
     }
     
@@ -141,7 +149,6 @@ extension ProfileViewController: CLLocationManagerDelegate{
         urlPath = "\(K.defaultUrlPath)\(localPath)"
         locationManager.delegate = self
         if didAskUserForLocationPermission{
-            locationManager.requestLocation()
             locationManager.startUpdatingLocation()
         }
     }
@@ -175,7 +182,7 @@ extension ProfileViewController: CLLocationManagerDelegate{
 //            if hasBeenAskedToChangeLocation{
 //                print("yeet")
 //            }else{
-            alertViewMaker(alertTitle: K.enableLocationErrorTitle, alertMessage: K.enableLocationError, actionTitle: K.okString)
+            alertViewMaker(alertTitle: ButtonTitles.Error.rawValue, alertMessage: K.enableLocationError, actionTitle: ButtonTitles.Ok.rawValue)
             break
         default:
             break
@@ -444,7 +451,7 @@ extension ProfileViewController {
     fileprivate func failedWithError(error: Error) {
         let localizedError = error.localizedDescription
         loadingHud.dismiss()
-        alertViewMaker(alertTitle: K.errorTitle, alertMessage: "\(localizedError)\n\(K.errorSuggestion)", actionTitle: K.okString)
+        alertViewMaker(alertTitle: ButtonTitles.Error.rawValue, alertMessage: "\(localizedError)\n\(K.errorSuggestion)", actionTitle: ButtonTitles.Ok.rawValue)
     }
     
     fileprivate func alertViewMaker(alertTitle: String, alertMessage: String, actionTitle: String){

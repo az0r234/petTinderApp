@@ -9,15 +9,13 @@
 import UIKit
 
 class ParametersButtons: UIButton {
-    private var leftLabel: String
-    private var rightLabel: String
+    private var leftLabel: ButtonTitles
     let leftLbl = UILabel()
     let rightLbl = UILabel()
     
-    init(leftLabel: String, rightLabel: String) {
+    init(leftLabel: ButtonTitles) {
         
         self.leftLabel = leftLabel
-        self.rightLabel = rightLabel
         super.init(frame: .zero)
         
         setupButtonAttr()
@@ -35,14 +33,14 @@ class ParametersButtons: UIButton {
     
     fileprivate func setLabels(){
         leftLbl.translatesAutoresizingMaskIntoConstraints = false
-        leftLbl.text = leftLabel
+        leftLbl.text = leftLabel.rawValue
         leftLbl.textColor = .black
         leftLbl.font = UIFont.boldSystemFont(ofSize: 18)
         leftLbl.textAlignment = .left
         
         rightLbl.translatesAutoresizingMaskIntoConstraints = false
         rightLbl.textColor = .gray
-        rightLbl.text = rightLabel
+        rightLbl.text = ButtonTitles.Random.rawValue
         rightLbl.font = UIFont.boldSystemFont(ofSize: 18)
         rightLbl.textAlignment = .right
     }
