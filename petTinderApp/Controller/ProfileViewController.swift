@@ -20,18 +20,9 @@ protocol ProfileViewControllerProtocol {
 
 class ProfileViewController: UIViewController{
     let cardDeckView = UIView()
-    let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-    let animalSettingsView = UIView()
     let animalPrefBtn = UIButton()
     
-    let layout = UICollectionViewFlowLayout()
-    var animalPrefController : AnimalPreferenceController!
-    
-    var settingsCardMoveUp: NSLayoutConstraint!
-    var settingsCardMoveDown: NSLayoutConstraint!
-    
     var delegate: ProfileViewControllerProtocol?
-    var settingsCardIsPoppedUp = false
     var isLocationEnabled = false
     var foundDuplicate = false
     
@@ -47,7 +38,6 @@ class ProfileViewController: UIViewController{
         super.viewDidLoad()
         
         locationManager.requestWhenInUseAuthorization()
-        animalPrefController = AnimalPreferenceController(collectionViewLayout: layout)
         setupLayoutCardView()
         fetchPickedAnimalData()
         getLocationIfAvailable()
@@ -61,11 +51,8 @@ class ProfileViewController: UIViewController{
     fileprivate func setupLayoutCardView() {
         view.backgroundColor = .white
         
-        animalPrefController.delegate = self
         addAnimalSettingsBtn()
         addCardDeckView()
-        addBlurViewAndGesture()
-        addSettingsCardView()
     }
     
     fileprivate func addAnimalSettingsBtn() {
@@ -74,10 +61,10 @@ class ProfileViewController: UIViewController{
         animalPrefBtn.layer.cornerRadius = 15
         
         view.addSubview(animalPrefBtn)
-        animalPrefBtn.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 10, right: 15), size: .init(width: 50, height: 50))
+        animalPrefBtn.centerXTo(view.centerXAnchor)
+        animalPrefBtn.anchor(top: nil, leading: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 10, bottom: 10, right: 0), size: .init(width: 50, height: 50))
+        
     }
-    
-//    var settings = Settings()
     
     var settings: Settings? = {
         let launcher = Settings()
@@ -85,58 +72,12 @@ class ProfileViewController: UIViewController{
     }()
     
     @objc fileprivate func testFunc(){
-        print(UIScreen.main.scale)
         settings?.showSettings()
     }
     
     fileprivate func addCardDeckView() {
         view.addSubview(cardDeckView)
         cardDeckView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 5, left: 3, bottom: 74, right: 3))
-    }
-    
-    fileprivate func addBlurViewAndGesture() {
-        //Blur View
-        view.addSubview(blurView)
-        blurView.fillSuperview()
-        blurView.alpha = 0
-        
-        // - Add Tap Gesture to BlurView
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(cardExit))
-        blurView.addGestureRecognizer(tapGesture)
-    }
-    
-    fileprivate func addSettingsCardView() {
-        animalSettingsView.layer.cornerRadius = 30
-        animalSettingsView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        animalSettingsView.autoresizesSubviews = true
-    
-        
-        view.addSubview(animalSettingsView)
-        animalSettingsView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: CGSize(width: 0, height: view.frame.height * 2/3))
-        
-        settingsCardMoveDown = animalSettingsView.topAnchor.constraint(equalTo: view.bottomAnchor)
-        settingsCardMoveDown?.isActive = true
-        
-        settingsCardMoveUp = animalSettingsView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        
-        addSlideDownGesture()
-        addSettingsVC()
-    }
-    
-    fileprivate func addSlideDownGesture(){
-        let slideDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(cardExit))
-        slideDownGesture.direction = .down
-        animalSettingsView.addGestureRecognizer(slideDownGesture)
-    }
-    
-    fileprivate func addSettingsVC(){
-        addChild(animalPrefController)
-        layout.scrollDirection = .horizontal
-        animalPrefController.view.translatesAutoresizingMaskIntoConstraints = false
-        animalSettingsView.addSubview(animalPrefController.view)
-        animalPrefController.didMove(toParent: self)
-        animalPrefController.view.fillSuperview()
-        animalPrefController.viewDidLoad()
     }
     
 }
@@ -206,7 +147,7 @@ extension ProfileViewController: CLLocationManagerDelegate{
     }
 }
 
-extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
+extension ProfileViewController: CardViewDelegate{
     
     // Shows the Website for that specific Animal
     func didPressMoreInfo(url: String) {
@@ -226,56 +167,56 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
         
         cardDeckView.subviews.forEach({$0.removeFromSuperview()})
         
-        FetchManager().fetchAnimalData(url: url) { (animalData, error) in
+        FetchManager().fetchAnimalData(url: url) { (res) in
             DispatchQueue.main.async {
-                if error != nil{
-                    self.failedWithError(error: error!)
-                    return
-                }
-                
-                guard let animals = animalData?.animals else { return }
-                guard let pagination = animalData?.pagination else { return }
-                guard let pickedAnimalsVal = self.pickedAnimals else { return }
-                
-                var previousCardView : CardView?
-                let paginationUrl = pagination.links?.next.href
-                var idArray = [Int]()
-                
-                
-                if pickedAnimalsVal.isEmpty {
-                    for pickedAnimal in pickedAnimalsVal{
-                        idArray.append(Int(pickedAnimal.animalId))
-                    }
-                }
-                
-                if !animals.isEmpty{
-                    for animal in animals{
-                        if !idArray.contains(animal.id!){
-                            self.foundDuplicate = false
-                            let cardView = self.setupCardsFromAnimals(animal: animal, paginationUrl: paginationUrl)
-                            
-                            previousCardView?.nextCard = cardView
-                            previousCardView?.nextCard?.isHidden = true
-                            previousCardView?.nextCard?.alpha = 0
-                            previousCardView = cardView
-                            
-                            if self.topCard == nil{
-                                self.topCard = cardView
-                            }
-                        }else{
-                            self.foundDuplicate = true
-                            self.loadingHud.dismiss()
-                            continue;
+                switch res {
+                case .success(let animalData):
+                    let animals = animalData.animals
+                    let pagination = animalData.pagination
+                    guard let pickedAnimalsVal = self.pickedAnimals else { return }
+                    
+                    var previousCardView : CardView?
+                    let paginationUrl = pagination.links?.next.href
+                    var idArray = [Int]()
+                    
+                    
+                    if pickedAnimalsVal.isEmpty {
+                        for pickedAnimal in pickedAnimalsVal{
+                            idArray.append(Int(pickedAnimal.animalId))
                         }
                     }
-                }else{
-                    self.loadingHud.dismiss()
-//                    self.getAnimalData(urlPath: paginationUrl!)
-                    print(url)
-                }
-                
-                if self.foundDuplicate{
-                    self.getAnimalData(urlPath: paginationUrl!)
+                    
+                    if !animals.isEmpty{
+                        for animal in animals{
+                            if !idArray.contains(animal.id!){
+                                self.foundDuplicate = false
+                                let cardView = self.setupCardsFromAnimals(animal: animal, paginationUrl: paginationUrl)
+                                
+                                previousCardView?.nextCard = cardView
+                                previousCardView?.nextCard?.isHidden = true
+                                previousCardView?.nextCard?.alpha = 0
+                                previousCardView = cardView
+                                
+                                if self.topCard == nil{
+                                    self.topCard = cardView
+                                }
+                            }else{
+                                self.foundDuplicate = true
+                                self.loadingHud.dismiss()
+                                continue;
+                            }
+                        }
+                    }else{
+                        self.loadingHud.dismiss()
+    //                    self.getAnimalData(urlPath: paginationUrl!)
+                        print(url)
+                    }
+                    
+                    if self.foundDuplicate{
+                        self.getAnimalData(urlPath: paginationUrl!)
+                    }
+                case .failure(let animalDataError):
+                    self.failedWithError(error: animalDataError)
                 }
             }
         }
@@ -331,7 +272,6 @@ extension ProfileViewController: CardViewDelegate, AnimalPreferenceProtocol{
     
     //does the swipe animation when it's swiped on
     fileprivate func performSwipeAnimation(translation: CGFloat, angle: CGFloat){
-        
         let duration = 0.5
         let positionXKeyPath = "position.x"
         let roationAnimationKeyPath = "transform.rotation.z"
@@ -404,44 +344,6 @@ extension ProfileViewController{
             self.pickedAnimals = try context.fetch(PickedAnimals.fetchRequest())
         }catch{
             failedWithError(error: error)
-        }
-    }
-}
-
-//MARK: - Handle Preference Buttons
-extension ProfileViewController{
-    
-    @objc func cardExit(){
-        switch settingsCardIsPoppedUp {
-        case false:
-            goUp()
-        case true:
-            goDown()
-        }
-        settingsCardIsPoppedUp.toggle()
-    }
-    
-    fileprivate func goUp() {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.3, options: .curveEaseInOut) {
-            self.animalPrefController.viewWillAppear(true)
-            self.settingsCardMoveUp?.isActive = true
-            self.settingsCardMoveDown?.isActive = false
-            self.view.layoutIfNeeded()
-            self.blurView.alpha = 1.0
-        } completion: { (_) in
-            self.delegate?.settingsDidGoUp()
-        }
-    }
-    
-    fileprivate func goDown() {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseOut) {
-            self.animalPrefController.viewWillDisappear(true)
-            self.settingsCardMoveUp?.isActive = false
-            self.settingsCardMoveDown?.isActive = true
-            self.view.layoutIfNeeded()
-            self.blurView.alpha = 0
-        } completion: { (_) in
-            self.delegate?.settingsDidGoDown()
         }
     }
 }

@@ -150,11 +150,6 @@ extension PickedAnimalsViewController{
         }
         removeSeperatorIfPickedAnimalEmpty()
         tableView.reloadData()
-//        UIView.transition(with: tableView, duration: 0.4, options: [.curveEaseInOut, .transitionCrossDissolve]) {
-//            self.tableView.reloadData()
-//        } completion: { (_) in
-//
-//        }
     }
 }
 

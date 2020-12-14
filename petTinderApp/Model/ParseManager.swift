@@ -12,7 +12,7 @@ struct FetchManager {
     //MARK: - Token Manager
     let tokenURL = K.tokenString
     
-    func fetchToken(completion: @escaping (TokenData?, Error?) -> ()){
+    func fetchToken(completion: @escaping (Result<TokenData, Error>) -> ()){
         guard let url = URL(string: tokenURL) else {return}
         guard let body = K.bodyString.data(using: .utf8) else {return}
         var request = URLRequest(url: url)
@@ -20,65 +20,67 @@ struct FetchManager {
         request.httpBody = body
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if error != nil{
+            if let err = error{
+                completion(.failure(err))
                 return
             }
+            
             guard let safeData = data else {return}
             do{
                 let decodedData = try JSONDecoder().decode(TokenData.self, from: safeData)
                 let tokenModel = TokenData(tokenType: decodedData.tokenType, expiresIn: decodedData.expiresIn, accessToken: decodedData.accessToken)
-                completion(tokenModel, nil)
-            }catch {
-                print(error.localizedDescription)
+                completion(.success(tokenModel))
+            }catch let jsonError {
+                completion(.failure(jsonError))
             }
         }
         task.resume()
     }
     
     //MARK: - Animal Data Manager
-    func fetchAnimalData(url: String, completion: @escaping (AnimalData?, Error?) -> ()){
+    func fetchAnimalData(url: String, completion: @escaping (Result<AnimalData, Error>) -> ()){
         JSONParser().downloadList(of: AnimalData.self, from: url) { (result) in
             switch result {
             case let .failure(error):
-                completion(nil, error)
+                completion(.failure(error))
             case let .success(animalData):
-                completion(animalData, nil)
+                completion(.success(animalData))
             }
         }
     }
     
     //MARK: - Animal Types Manager
-    func fetchAnimalTypes(url: String, completion: @escaping (AnimalTypesData?, Error?) -> ()){
+    func fetchAnimalTypes(url: String, completion: @escaping (Result<AnimalTypesData, Error>) -> ()){
         JSONParser().downloadList(of: AnimalTypesData.self, from: url) { (result) in
             switch result {
             case let .failure(error):
-                completion(nil, error)
+                completion(.failure(error))
             case let .success(animalTypesData):
-                completion(animalTypesData, nil)
+                completion(.success(animalTypesData))
             }
         }
     }
     
     //MARK: - Breed Manager
-    func fetchBreed(url: String, completion: @escaping (BreedModel?, Error?) -> ()){
+    func fetchBreed(url: String, completion: @escaping (Result<BreedModel, Error>) -> ()){
         JSONParser().downloadList(of: BreedModel.self, from: url) { (result) in
             switch result {
             case let .failure(error):
-                completion(nil, error)
+                completion(.failure(error))
             case let .success(breed):
-                completion(breed, nil)
+                completion(.success(breed))
             }
         }
     }
     
     //MARK: - Organization Data Manager
-    func fetchOrganizationData(url: String, completion: @escaping (OrganizationData?, Error?) -> ()){
+    func fetchOrganizationData(url: String, completion: @escaping (Result<OrganizationData, Error>) -> ()){
         JSONParser().downloadList(of: OrganizationData.self, from: url) { (result) in
             switch result {
             case let .failure(error):
-                completion(nil, error)
+                completion(.failure(error))
             case let .success(organizationData):
-                completion(organizationData, nil)
+                completion(.success(organizationData))
             }
         }
     }

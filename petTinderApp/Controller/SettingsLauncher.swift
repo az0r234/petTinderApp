@@ -10,27 +10,29 @@ import UIKit
 
 private let cellId = "cellId"
 
-class SettingsObject {
+class SettingsObject : NSObject{
     let settingsName : ButtonTitles
+    let x : UIViewController
     let selection : String
     
-    init(settingName: ButtonTitles, selection: String = "") {
+    init(settingName: ButtonTitles, selection: String = "", x: UIViewController) {
         self.settingsName = settingName
         self.selection = selection
+        self.x = x
     }
 }
 
-class Settings: NSObject {
+class Settings: NSObject{
     
     let settings: [SettingsObject] = {
-        let animalType  = SettingsObject(settingName: .AnimalType)
-        let breed = SettingsObject(settingName: .Breed)
-        let color = SettingsObject(settingName: .Color)
-        let coat = SettingsObject(settingName: .Coat)
-        let size = SettingsObject(settingName: .Size)
-        let gender = SettingsObject(settingName: .Gender)
-        let age = SettingsObject(settingName: .Age)
-        let range = SettingsObject(settingName: .Range)
+        let animalType  = SettingsObject(settingName: .AnimalType, x: UIViewController())
+        let breed = SettingsObject(settingName: .Breed, x: UIViewController())
+        let color = SettingsObject(settingName: .Color, x: UIViewController())
+        let coat = SettingsObject(settingName: .Coat, x: UIViewController())
+        let size = SettingsObject(settingName: .Size, x: UIViewController())
+        let gender = SettingsObject(settingName: .Gender, x: UIViewController())
+        let age = SettingsObject(settingName: .Age, x: UIViewController())
+        let range = SettingsObject(settingName: .Range, x: UIViewController())
         return [animalType, breed, color, coat, size, gender, age, range]
     }()
     
@@ -66,11 +68,9 @@ class Settings: NSObject {
         return cv
     }()
     
+    
     @objc func showSettings(){
-        
         if let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first{
-            
-            
             
             window.addSubview(blackView)
             blackView.frame = window.frame
@@ -117,7 +117,8 @@ class Settings: NSObject {
             self.blackView.alpha = 0
             self.collectionView.transform = .identity
         } completion: { (_) in
-
+            self.blackView.removeFromSuperview()
+            self.collectionView.removeFromSuperview()
         }
     }
     
@@ -130,7 +131,6 @@ class Settings: NSObject {
         super.init()
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         collectionView.register(SettingsCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
     }
     
@@ -162,6 +162,7 @@ extension Settings: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(settings[indexPath.row].settingsName.rawValue)
+        
     }
     
     func showVC(){

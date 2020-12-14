@@ -11,7 +11,7 @@ import UIKit
 private let reuseIdentifier = "rootCellId"
 class RootViewController: UICollectionViewController {
     
-    let settingsVC = SettingsViewController()
+    let settingsVC = InfoViewController()
     let profileVC = ProfileViewController()
     let pickedAnimalVC = PickedAnimalsViewController()
     let darkView = UIView()
@@ -44,7 +44,7 @@ class RootViewController: UICollectionViewController {
     
     fileprivate func setupTopBar(){
         view.addSubview(topBar)
-        topBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: 100))
+        topBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: 100 * (UIScreen.main.scale/3) + 10))
     }
     
     fileprivate func setupCollectionView(){

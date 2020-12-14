@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsButtons: UIButton {
+class InfoButtons: UIButton {
     
     let iconImage : UIImage
     
@@ -37,9 +37,9 @@ class SettingsButtons: UIButton {
     }
 }
 
-class UserProfileView: UIView {
+class InfoView: UIView {
     
-    let userImageView : UIImageView = {
+    let githubImageView : UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.image = #imageLiteral(resourceName: "github-logo").withRenderingMode(.alwaysOriginal)
@@ -47,9 +47,8 @@ class UserProfileView: UIView {
         return imageView
     }()
     
-    let animalPreferenceBtn = SettingsButtons(iconImage: #imageLiteral(resourceName: "paw"))
-    let infoBtn = SettingsButtons(iconImage: #imageLiteral(resourceName: "info"))
-    
+    let petFinderPageButton = InfoButtons(iconImage: #imageLiteral(resourceName: "paw"))
+    let infoButton = InfoButtons(iconImage: #imageLiteral(resourceName: "info"))
     let buttonSpacing: CGFloat = 150
 
     override init(frame: CGRect) {
@@ -63,26 +62,23 @@ class UserProfileView: UIView {
     }
     
     fileprivate func setupUserImageView(){
-        addSubview(userImageView)
-        userImageView.centerXTo(centerXAnchor)
-        userImageView.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 20, left: 0, bottom: 0, right: 0), size: .init(width: buttonSpacing, height: buttonSpacing))
-        userImageView.layer.cornerRadius = buttonSpacing / 2
-        userImageView.backgroundColor = .white
+        addSubview(githubImageView)
+        githubImageView.centerXTo(centerXAnchor)
+        githubImageView.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 20, left: 0, bottom: 0, right: 0), size: .init(width: buttonSpacing, height: buttonSpacing))
+        githubImageView.layer.cornerRadius = buttonSpacing / 2
+        githubImageView.backgroundColor = .white
     }
     
     fileprivate func setupButtons(){
-        let buttonStackView = UIStackView(arrangedSubviews: [animalPreferenceBtn, infoBtn])
-
+        let buttonStackView = UIStackView(arrangedSubviews: [petFinderPageButton, infoButton])
         buttonStackView.distribution = .equalCentering
         buttonStackView.spacing = buttonSpacing
         addSubview(buttonStackView)
-        buttonStackView.anchor(top: userImageView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
+        buttonStackView.anchor(top: githubImageView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 20, left: 15, bottom: 0, right: 15))
     }
     
-    
-    
     override func layoutSubviews() {
-        [userImageView, infoBtn, animalPreferenceBtn].forEach { (view) in
+        [githubImageView, infoButton, petFinderPageButton].forEach { (view) in
             view.setupShadow(opacity: 0.5, radius: 8, offset: .init(width: 4, height: 5), color: .black)
         }
     }

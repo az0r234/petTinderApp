@@ -52,16 +52,12 @@ class SettingsCollectionViewCell: BaseCell {
         layer.borderWidth = 1
         layer.borderColor = UIColor.lightGray.cgColor
     }
-
     
     override var isHighlighted: Bool {
         didSet{
             backgroundColor = isHighlighted ? .gray : .white
-            
             preferenceName.textColor = isHighlighted ? .white : .black
-            
             selectionName.textColor = isHighlighted ? .white : .black
-            
             arrowImageView.image = isHighlighted ? UIImage(systemName: "arrowtriangle.right.fill")?.withRenderingMode(.alwaysTemplate) : UIImage(systemName: "arrowtriangle.right")?.withRenderingMode(.alwaysTemplate)
         }
     }

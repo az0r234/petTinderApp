@@ -9,34 +9,27 @@
 import UIKit
 import SafariServices
 
-enum SettingsVal: String {
-    case AnimalType
-}
-
-class SettingsViewController: UIViewController{
+class InfoViewController: UIViewController{
     
-    let userProfileView = UserProfileView()
+    let userProfileView = InfoView()
     let curveView = AnimalFactsView()
-    let settingsDictionary : [String : String] = [SettingsVal.AnimalType.rawValue : "YEET"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
         
-        UserDefaults.standard.setValuesForKeys(settingsDictionary)
-        
-        setupUserProfileView()
+        setupInfoView()
         setupAnimalFactView()
     }
     
-    private func setupUserProfileView(){
+    private func setupInfoView(){
         view.addSubview(userProfileView)
         userProfileView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 20, left: 15, bottom: 0, right: 15), size: .init(width: view.frame.width, height: 280))
         
-        userProfileView.animalPreferenceBtn.addTarget(self, action: #selector(handlePreferencePressed), for: .touchUpInside)
-        userProfileView.infoBtn.addTarget(self, action: #selector(handleInfoPressed), for: .touchUpInside)
-        userProfileView.userImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleGoToGitHub)))
+        userProfileView.petFinderPageButton.addTarget(self, action: #selector(handlePreferencePressed), for: .touchUpInside)
+        userProfileView.infoButton.addTarget(self, action: #selector(handleInfoPressed), for: .touchUpInside)
+        userProfileView.githubImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleGoToGitHub)))
     }
     
     @objc func handleGoToGitHub(gesture: UITapGestureRecognizer){
@@ -65,6 +58,7 @@ class SettingsViewController: UIViewController{
     
     private func setupAnimalFactView(){
         view.addSubview(curveView)
+        curveView.backgroundColor = .clear
         curveView.anchor(top: view.centerYAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
     }
     

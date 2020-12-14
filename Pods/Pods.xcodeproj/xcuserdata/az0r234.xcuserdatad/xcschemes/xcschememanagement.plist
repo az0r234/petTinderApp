@@ -14,22 +14,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pageboy.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-petTinderApp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>SDWebImage.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Tabman.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

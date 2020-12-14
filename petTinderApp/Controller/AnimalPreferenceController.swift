@@ -89,10 +89,16 @@ extension AnimalPreferenceController {
     func loadAnimalPreferenceData() {
         let animalTypeUrl = "https://api.petfinder.com/v2/types"
         dispatchGroup.enter()
-        FetchManager().fetchAnimalTypes(url: animalTypeUrl) { (typeModel, error) in
-            guard let types = typeModel?.types else { return }
-            self.animalTypeData = types
-            self.dispatchGroup.leave()
+        
+        FetchManager().fetchAnimalTypes(url: animalTypeUrl) { (res) in
+            switch res {
+            case .success(let animalTypes):
+                guard let types = animalTypes.types else { return }
+                self.animalTypeData = types
+                self.dispatchGroup.leave()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -106,9 +112,14 @@ extension AnimalPreferenceController {
             }
         }
         
-        FetchManager().fetchBreed(url: breedLink) { (breedModel, error) in
-            guard let breeds = breedModel?.breeds else { return }
-            self.breedData = breeds
+        FetchManager().fetchBreed(url: breedLink) { (res) in
+            switch res {
+            case .success(let breed):
+                guard let breeds = breed.breeds else { return }
+                self.breedData = breeds
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }

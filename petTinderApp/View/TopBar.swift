@@ -62,7 +62,7 @@ class TopBar: UIView {
         
         
         addSubview(collectionView)
-        collectionView.anchor(top: centerYAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, size: .init(width: 0, height: 50))
+        collectionView.anchor(top: centerYAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,padding: .init(top: 0, left: 0, bottom: 5, right: 0), size: .init(width: 0, height: 50))
         
         let indexPath = IndexPath(item: 1, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)

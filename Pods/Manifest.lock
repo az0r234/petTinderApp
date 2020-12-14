@@ -2,38 +2,29 @@ PODS:
   - JGProgressHUD (2.2)
   - LBTATools (1.0.12)
   - lottie-ios (3.1.9)
-  - Pageboy (3.6.2)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
-  - Tabman (2.9.1):
-    - Pageboy (~> 3.6.0)
 
 DEPENDENCIES:
   - JGProgressHUD
   - LBTATools
   - lottie-ios
-  - Pageboy
   - SDWebImage
-  - Tabman
 
 SPEC REPOS:
   trunk:
     - JGProgressHUD
     - LBTATools
     - lottie-ios
-    - Pageboy
     - SDWebImage
-    - Tabman
 
 SPEC CHECKSUMS:
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   LBTATools: 389a901a01b9a56bea5682c40cd6e23530f40015
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
-  Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
-  Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
 
-PODFILE CHECKSUM: e91f8046f1cc3017ed80e013798187b83fa82f20
+PODFILE CHECKSUM: ebabe6be18d4076990082a2d320eece7220b03f7
 
 COCOAPODS: 1.10.0

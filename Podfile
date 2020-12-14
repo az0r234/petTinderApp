@@ -7,8 +7,6 @@ target 'petTinderApp' do
 
   # Pods for petTinderApp
   pod 'SDWebImage'
-  pod 'Tabman'
-  pod 'Pageboy'
   pod 'LBTATools'
   pod 'JGProgressHUD'
   pod 'lottie-ios'
