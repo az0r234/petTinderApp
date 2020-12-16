@@ -73,6 +73,9 @@ class ProfileViewController: UIViewController{
     
     @objc fileprivate func testFunc(){
         settings?.showSettings()
+//        guard let encodedToken = UserDefaults.standard.data(forKey: "token") else { return }
+//        let decodedToken = try! PropertyListDecoder().decode(TokenData.self, from: encodedToken)
+//        guard let tokenType = decodedToken.tokenType, let tokenVal = decodedToken.accessToken, let tokenDuration = decodedToken.expiresIn else { return }
     }
     
     fileprivate func addCardDeckView() {

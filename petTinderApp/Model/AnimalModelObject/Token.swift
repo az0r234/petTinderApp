@@ -20,4 +20,3 @@ struct TokenData: Codable {
         case accessToken = "access_token"
     }
 }
-

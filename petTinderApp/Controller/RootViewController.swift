@@ -25,26 +25,19 @@ class RootViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         collectionViewArray = [settingsVC, profileVC, pickedAnimalVC]
-        
-        
         setupTopBar()
         setupCollectionView()
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupDarkView()
     }
     
     fileprivate func setupTopBar(){
         view.addSubview(topBar)
-        topBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: 100 * (UIScreen.main.scale/3) + 10))
+        topBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: 120 * (UIScreen.main.scale/3) + 10))
     }
     
     fileprivate func setupCollectionView(){
@@ -89,10 +82,10 @@ extension RootViewController: UICollectionViewDelegateFlowLayout{
     func scrollToMenuItem(menuItem: Int){
         let indexPath = IndexPath(item: menuItem, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        collectionViewArray[indexPath.row].viewWillAppear(true)
     }
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
         let index = targetContentOffset.pointee.x / view.frame.width
         let indexPath = IndexPath(item: Int(index), section: 0)
         topBar.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)

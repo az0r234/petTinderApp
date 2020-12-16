@@ -11,13 +11,14 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        checkFetch()
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
@@ -25,10 +26,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let startScreen = SplashViewController()
         window?.rootViewController = startScreen
         window?.makeKeyAndVisible()
-        
     }
     
-
+    func checkFetch(){
+        FetchManager().fetchSomeToken { (error) in
+            if let err = error{
+                print(err.localizedDescription)
+                return
+            }
+        }
+        guard let encodedToken = UserDefaults.standard.data(forKey: "token") else { return }
+        let decodedToken = try! PropertyListDecoder().decode(TokenData.self, from: encodedToken)
+        guard let tokenDuration = decodedToken.expiresIn else { return }
+        
+        Timer.scheduledTimer(withTimeInterval: TimeInterval(tokenDuration), repeats: true) { (_) in
+            FetchManager().fetchSomeToken { (error) in
+                if let err = error{
+                    print(err.localizedDescription)
+                    return
+                }
+            }
+        }
+    }
+    
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
@@ -49,6 +70,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

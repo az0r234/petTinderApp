@@ -10,28 +10,27 @@ import Foundation
 
 struct FetchManager {
     //MARK: - Token Manager
-    let tokenURL = K.tokenString
-    
-    func fetchToken(completion: @escaping (Result<TokenData, Error>) -> ()){
-        guard let url = URL(string: tokenURL) else {return}
-        guard let body = K.bodyString.data(using: .utf8) else {return}
+    func fetchSomeToken(completion: @escaping (Error?) -> ()){
+        guard let url = URL(string: K.tokenString), let body = K.bodyString.data(using: .utf8) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = HttpMethod.post.rawValue
         request.httpBody = body
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let err = error{
-                completion(.failure(err))
-                return
+            if let err = error {
+                completion(err)
             }
             
             guard let safeData = data else {return}
+            
             do{
                 let decodedData = try JSONDecoder().decode(TokenData.self, from: safeData)
                 let tokenModel = TokenData(tokenType: decodedData.tokenType, expiresIn: decodedData.expiresIn, accessToken: decodedData.accessToken)
-                completion(.success(tokenModel))
-            }catch let jsonError {
-                completion(.failure(jsonError))
+                
+                let encodedTokenModel = try PropertyListEncoder().encode(tokenModel)
+                UserDefaults.standard.setValue(encodedTokenModel, forKey: "token")
+            }catch let jsonError{
+                completion(jsonError)
             }
         }
         task.resume()

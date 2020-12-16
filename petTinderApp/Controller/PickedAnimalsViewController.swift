@@ -24,6 +24,7 @@ class PickedAnimalsViewController: UIViewController{
         
         tableView.alwaysBounceVertical = false
         tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .none
         tableView.backgroundColor = .white
         tableView.delegate = self
         tableView.dataSource = self
@@ -38,14 +39,6 @@ class PickedAnimalsViewController: UIViewController{
         fetchPickedAnimalData()
     }
     
-    fileprivate func removeSeperatorIfPickedAnimalEmpty(){
-        if pickedAnimals!.isEmpty{
-            tableView.separatorStyle = .none
-        }else{
-            tableView.separatorStyle = .singleLine
-        }
-    }
-    
     fileprivate func setupSearchBar(){
         
         view.addSubview(tableView)
@@ -54,6 +47,8 @@ class PickedAnimalsViewController: UIViewController{
         view.addSubview(searchBar)
         searchBar.anchor(top: nil, leading: view.leadingAnchor, bottom: tableView.topAnchor, trailing: view.trailingAnchor)
     }
+    
+    
 }
 
 //MARK: - TableView Methods
@@ -77,6 +72,8 @@ extension PickedAnimalsViewController: UITableViewDelegate, UITableViewDataSourc
         cell.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gesture:))))
         return cell
     }
+    
+    
     
     @objc fileprivate func handleLongPress(gesture: UILongPressGestureRecognizer){
         switch gesture.state {
@@ -148,7 +145,6 @@ extension PickedAnimalsViewController{
         }catch{
             failedWithError(error: error)
         }
-        removeSeperatorIfPickedAnimalEmpty()
         tableView.reloadData()
     }
 }

@@ -8,10 +8,8 @@
 
 import UIKit
 
-
-
 class CustomButton: UIButton {
-
+    
     let centerLabel : ButtonTitles
     let backGround: UIColor
     let label = UILabel()

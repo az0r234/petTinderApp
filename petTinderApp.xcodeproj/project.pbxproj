@@ -34,7 +34,7 @@
 		BF7EBAB7257CBE4F0092B0EA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBAB6257CBE4F0092B0EA /* Extensions.swift */; };
 		BF7EBABA257CC9CD0092B0EA /* SettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBAB9257CC9CD0092B0EA /* SettingsLauncher.swift */; };
 		BF7EBACB257EDF7E0092B0EA /* SettingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBACA257EDF7E0092B0EA /* SettingsCollectionViewCell.swift */; };
-		BF87E31E25647C3700B43DBD /* ParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87E31D25647C3700B43DBD /* ParseManager.swift */; };
+		BF87E31E25647C3700B43DBD /* FetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF87E31D25647C3700B43DBD /* FetchManager.swift */; };
 		BF90D5692548A92C00C4C6E0 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D5682548A92C00C4C6E0 /* Token.swift */; };
 		BF90D5712548AD2700C4C6E0 /* API-Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D5702548AD2700C4C6E0 /* API-Keys.swift */; };
 		BF90D5742548AD3000C4C6E0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90D5732548AD3000C4C6E0 /* Constants.swift */; };
@@ -86,7 +86,7 @@
 		BF7EBAB6257CBE4F0092B0EA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BF7EBAB9257CC9CD0092B0EA /* SettingsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLauncher.swift; sourceTree = "<group>"; };
 		BF7EBACA257EDF7E0092B0EA /* SettingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCollectionViewCell.swift; sourceTree = "<group>"; };
-		BF87E31D25647C3700B43DBD /* ParseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseManager.swift; sourceTree = "<group>"; };
+		BF87E31D25647C3700B43DBD /* FetchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchManager.swift; sourceTree = "<group>"; };
 		BF90D5682548A92C00C4C6E0 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		BF90D5702548AD2700C4C6E0 /* API-Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "API-Keys.swift"; sourceTree = "<group>"; };
 		BF90D5732548AD3000C4C6E0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -204,8 +204,8 @@
 			isa = PBXGroup;
 			children = (
 				BF87E32125647E3100B43DBD /* AnimalModelObject */,
+				BF87E31D25647C3700B43DBD /* FetchManager.swift */,
 				BFEF417C25636ED700261AE8 /* JsonParserGeneric.swift */,
-				BF87E31D25647C3700B43DBD /* ParseManager.swift */,
 				BF1BA0662579ED0400E9C42B /* PickedAnimalObject */,
 			);
 			path = Model;
@@ -409,7 +409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF87E31E25647C3700B43DBD /* ParseManager.swift in Sources */,
+				BF87E31E25647C3700B43DBD /* FetchManager.swift in Sources */,
 				BF6E0D592579BDA100E74D3F /* PickedAnimalModel.xcdatamodeld in Sources */,
 				BFB9D8EC256F610D00C2B8EE /* CustomButtons.swift in Sources */,
 				BF90D5742548AD3000C4C6E0 /* Constants.swift in Sources */,
